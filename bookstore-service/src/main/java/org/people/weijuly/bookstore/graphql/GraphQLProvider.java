@@ -18,11 +18,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.AddAuthorResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.AddBookResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.MutationType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.QueryType;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.addAuthorMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addBookMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByAuthorQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByIdQuery;
@@ -74,7 +72,7 @@ public class GraphQLProvider {
                 .type(MutationType, typeWiring -> typeWiring
                         .dataFetcher(addBookMutation, fetchers.addBook()))
                 .type(AddBookResultType, typeWiring -> typeWiring
-                        .typeResolver(resolvers.addBookResultResovler()))
+                        .typeResolver(resolvers.addBookResultResolver()))
                 .build();
     }
 

@@ -12,7 +12,7 @@ import static org.people.weijuly.bookstore.util.BookStoreConstants.BookType;
 @Component
 public class BookStoreTypeResolvers {
 
-    public TypeResolver addBookResultResovler() {
+    public TypeResolver addBookResultResolver() {
         return env -> env.getObject() instanceof BookModel ? getType(env, BookType) : getErrorType(env);
     }
 
