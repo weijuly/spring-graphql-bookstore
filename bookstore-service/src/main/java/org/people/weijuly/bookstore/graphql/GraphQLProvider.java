@@ -24,6 +24,7 @@ import static org.people.weijuly.bookstore.util.BookStoreConstants.MutationType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.QueryType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addAuthorMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addBookMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByAuthorQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByIdQuery;
 import static org.springframework.util.StreamUtils.copyToString;
 
@@ -67,13 +68,11 @@ public class GraphQLProvider {
     private RuntimeWiring wiring() {
         return newRuntimeWiring()
                 .type(QueryType, typeWiring -> typeWiring
+                        .dataFetcher(searchBookByAuthorQuery, fetchers.searchBookByAuthor())
                         .dataFetcher(searchBookByIdQuery, fetchers.searchBookById())
                         .dataFetcher("authors", fetchers.authors()))
                 .type(MutationType, typeWiring -> typeWiring
-                        .dataFetcher(addBookMutation, fetchers.addBook())
-                        .dataFetcher(addAuthorMutation, fetchers.addAuthor()))
-                .type(AddAuthorResultType, typeWiring -> typeWiring
-                        .typeResolver(resolvers.addAuthorResultResolver()))
+                        .dataFetcher(addBookMutation, fetchers.addBook()))
                 .type(AddBookResultType, typeWiring -> typeWiring
                         .typeResolver(resolvers.addBookResultResovler()))
                 .build();

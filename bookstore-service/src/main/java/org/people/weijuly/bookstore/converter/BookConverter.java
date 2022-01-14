@@ -17,7 +17,7 @@ public class BookConverter {
         entity.setPages(bookIn.getPages());
         entity.setPrice(bookIn.getPrice());
         entity.setCopies(bookIn.getCopies());
-        entity.setAuthor(authorId);
+        entity.setAuthorId(authorId);
         return entity;
     }
 

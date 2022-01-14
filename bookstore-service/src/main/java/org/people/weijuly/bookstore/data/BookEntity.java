@@ -45,7 +45,7 @@ public class BookEntity {
     private Date updatedOn;
 
     @Column(name = "AUTHOR_ID", nullable = false)
-    private String author;
+    private String authorId;
 
     @PrePersist
     @PreUpdate

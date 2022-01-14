@@ -11,4 +11,5 @@ public interface BookStoreConstants {
     String BookStoreErrorType = "BookStoreError";
     String AddBookResultType = "AddBookResult";
     String bookArg = "book";
+    String searchBookByAuthorQuery = "searchBookByAuthor";
 }
