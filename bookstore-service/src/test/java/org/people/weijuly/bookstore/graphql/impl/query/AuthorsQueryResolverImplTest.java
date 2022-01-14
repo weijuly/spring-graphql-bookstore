@@ -19,17 +19,17 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AuthorsQueryResolverImplTest {
 
-	@Mock
-	AuthorRepository authorRepository;
+    @Mock
+    AuthorRepository authorRepository;
 
-	@InjectMocks
-	AuthorsQueryResolverImpl impl;
+    @InjectMocks
+    AuthorsQueryResolverImpl impl;
 
-	@Test
-	public void test() throws Exception {
-		when(authorRepository.findAll()).thenReturn(singletonList(new AuthorEntity()));
-		List<AuthorModel> models = impl.authors();
-		assertNotNull(models);
-		assertEquals(models.size(), 1);
-	}
+    @Test
+    public void test() throws Exception {
+        when(authorRepository.findAll()).thenReturn(singletonList(new AuthorEntity()));
+        List<AuthorModel> models = impl.authors();
+        assertNotNull(models);
+        assertEquals(models.size(), 1);
+    }
 }

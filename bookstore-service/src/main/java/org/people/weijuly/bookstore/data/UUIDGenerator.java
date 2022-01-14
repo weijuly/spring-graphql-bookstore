@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public class UUIDGenerator implements IdentifierGenerator {
 
-	@Override
-	public Serializable generate(SharedSessionContractImplementor implementor, Object object)
-			throws HibernateException {
-		return UUID.randomUUID().toString();
-	}
+    @Override
+    public Serializable generate(SharedSessionContractImplementor implementor, Object object)
+            throws HibernateException {
+        return UUID.randomUUID().toString();
+    }
 }

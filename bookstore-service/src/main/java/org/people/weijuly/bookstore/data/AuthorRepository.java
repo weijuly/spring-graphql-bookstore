@@ -10,8 +10,8 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends CrudRepository<AuthorEntity, String> {
 
-	@NotNull
-	List<AuthorEntity> findAll();
+    @NotNull
+    List<AuthorEntity> findAll();
 
-	Optional<AuthorEntity> findByFirstNameAndLastName(String firstName, String lastName);
+    Optional<AuthorEntity> findByFirstNameAndLastName(String firstName, String lastName);
 }

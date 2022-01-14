@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface BookRepository extends CrudRepository<BookEntity, String> {
 
-	Optional<BookEntity> findByName(String name);
+    Optional<BookEntity> findByName(String name);
 
 }

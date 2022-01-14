@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
-import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.AddAuthorResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.AddBookResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.MutationType;
@@ -31,56 +30,56 @@ import static org.springframework.util.StreamUtils.copyToString;
 @Component
 public class GraphQLProvider {
 
-	private static final Logger logger = LoggerFactory.getLogger(GraphQLProvider.class);
+    private static final Logger logger = LoggerFactory.getLogger(GraphQLProvider.class);
 
-	private GraphQL graphQL;
+    private GraphQL graphQL;
 
-	private GraphQLSchema schema;
+    private GraphQLSchema schema;
 
-	@Value("${graphql.specification.file}")
-	private String specFilePath;
+    @Value("${graphql.specification.file}")
+    private String specFilePath;
 
-	@Autowired
-	private BookStoreDataFetchers fetchers;
+    @Autowired
+    private BookStoreDataFetchers fetchers;
 
-	@Autowired
-	private BookStoreTypeResolvers resolvers;
+    @Autowired
+    private BookStoreTypeResolvers resolvers;
 
-	@Bean
-	public GraphQLSchema schema() {
-		return schema;
-	}
+    @Bean
+    public GraphQLSchema schema() {
+        return schema;
+    }
 
-	@PostConstruct
-	public void init() throws IOException {
-		schema = schema(specification());
-		logger.info("Schema constructed");
-	}
+    @PostConstruct
+    public void init() throws IOException {
+        schema = schema(specification());
+        logger.info("Schema constructed");
+    }
 
-	private GraphQLSchema schema(String spec) {
-		return new SchemaGenerator()
-				.makeExecutableSchema(
-						new SchemaParser().parse(spec),
-						wiring()
-				);
-	}
+    private GraphQLSchema schema(String spec) {
+        return new SchemaGenerator()
+                .makeExecutableSchema(
+                        new SchemaParser().parse(spec),
+                        wiring()
+                );
+    }
 
-	private RuntimeWiring wiring() {
-		return newRuntimeWiring()
-				.type(QueryType, typeWiring -> typeWiring
-						.dataFetcher(searchBookByIdQuery, fetchers.searchBookById())
-						.dataFetcher("authors", fetchers.authors()))
-				.type(MutationType, typeWiring -> typeWiring
-						.dataFetcher(addBookMutation, fetchers.addBook())
-						.dataFetcher(addAuthorMutation, fetchers.addAuthor()))
-				.type(AddAuthorResultType, typeWiring -> typeWiring
-						.typeResolver(resolvers.addAuthorResultResolver()))
-				.type(AddBookResultType, typeWiring -> typeWiring
-						.typeResolver(resolvers.addBookResultResovler()))
-				.build();
-	}
+    private RuntimeWiring wiring() {
+        return newRuntimeWiring()
+                .type(QueryType, typeWiring -> typeWiring
+                        .dataFetcher(searchBookByIdQuery, fetchers.searchBookById())
+                        .dataFetcher("authors", fetchers.authors()))
+                .type(MutationType, typeWiring -> typeWiring
+                        .dataFetcher(addBookMutation, fetchers.addBook())
+                        .dataFetcher(addAuthorMutation, fetchers.addAuthor()))
+                .type(AddAuthorResultType, typeWiring -> typeWiring
+                        .typeResolver(resolvers.addAuthorResultResolver()))
+                .type(AddBookResultType, typeWiring -> typeWiring
+                        .typeResolver(resolvers.addBookResultResovler()))
+                .build();
+    }
 
-	private String specification() throws IOException {
-		return copyToString(new ClassPathResource(specFilePath).getInputStream(), Charset.defaultCharset());
-	}
+    private String specification() throws IOException {
+        return copyToString(new ClassPathResource(specFilePath).getInputStream(), Charset.defaultCharset());
+    }
 }

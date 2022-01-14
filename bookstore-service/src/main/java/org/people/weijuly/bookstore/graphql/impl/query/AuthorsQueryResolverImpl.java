@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 @Component
 public class AuthorsQueryResolverImpl implements AuthorsQueryResolver {
 
-	@Autowired
-	private AuthorRepository authorRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
 
-	@Override
-	public List<AuthorModel> authors() throws Exception {
-		return authorRepository
-				.findAll()
-				.stream()
-				.map(AuthorConverter::convert)
-				.collect(Collectors.toList());
-	}
+    @Override
+    public List<AuthorModel> authors() throws Exception {
+        return authorRepository
+                .findAll()
+                .stream()
+                .map(AuthorConverter::convert)
+                .collect(Collectors.toList());
+    }
 }

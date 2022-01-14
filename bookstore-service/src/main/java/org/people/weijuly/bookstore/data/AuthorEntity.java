@@ -14,16 +14,16 @@ import javax.persistence.Table;
 @Table(name = "AUTHOR")
 public class AuthorEntity {
 
-	@Id
-	@Column(name = "ID")
-	@GenericGenerator(name = "authorId", strategy = "org.people.weijuly.bookstore.data.UUIDGenerator")
-	@GeneratedValue(generator = "authorId")
-	private String id;
+    @Id
+    @Column(name = "ID")
+    @GenericGenerator(name = "authorId", strategy = "org.people.weijuly.bookstore.data.UUIDGenerator")
+    @GeneratedValue(generator = "authorId")
+    private String id;
 
-	@Column(name = "FIRST_NAME", nullable = false)
-	private String firstName;
+    @Column(name = "FIRST_NAME", nullable = false)
+    private String firstName;
 
-	@Column(name = "LAST_NAME", nullable = false)
-	private String lastName;
+    @Column(name = "LAST_NAME", nullable = false)
+    private String lastName;
 
 }

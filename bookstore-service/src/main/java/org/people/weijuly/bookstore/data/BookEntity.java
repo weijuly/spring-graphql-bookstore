@@ -17,39 +17,39 @@ import java.util.Date;
 @Table(name = "BOOK")
 public class BookEntity {
 
-	@Id
-	@Column(name = "ID")
-	@GenericGenerator(name = "bookId", strategy = "org.people.weijuly.bookstore.data.UUIDGenerator")
-	@GeneratedValue(generator = "bookId")
-	private String id;
+    @Id
+    @Column(name = "ID")
+    @GenericGenerator(name = "bookId", strategy = "org.people.weijuly.bookstore.data.UUIDGenerator")
+    @GeneratedValue(generator = "bookId")
+    private String id;
 
-	@Column(name = "ISBN", nullable = false)
-	private String isbn;
+    @Column(name = "ISBN", nullable = false)
+    private String isbn;
 
-	@Column(name = "NAME", nullable = false)
-	private String name;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
-	@Column(name = "PUB_YEAR", nullable = false)
-	private Integer year;
+    @Column(name = "PUB_YEAR", nullable = false)
+    private Integer year;
 
-	@Column(name = "PAGES", nullable = false)
-	private Integer pages;
+    @Column(name = "PAGES", nullable = false)
+    private Integer pages;
 
-	@Column(name = "PRICE", nullable = false)
-	private Integer price;
+    @Column(name = "PRICE", nullable = false)
+    private Integer price;
 
-	@Column(name = "COPIES", nullable = false)
-	private Integer copies;
+    @Column(name = "COPIES", nullable = false)
+    private Integer copies;
 
-	@Column(name = "UPDATED_ON", nullable = false)
-	private Date updatedOn;
+    @Column(name = "UPDATED_ON", nullable = false)
+    private Date updatedOn;
 
-	@Column(name = "AUTHOR_ID", nullable = false)
-	private String author;
+    @Column(name = "AUTHOR_ID", nullable = false)
+    private String author;
 
-	@PrePersist
-	@PreUpdate
-	public void setUpdatedOn() {
-		updatedOn = new Date();
-	}
+    @PrePersist
+    @PreUpdate
+    public void setUpdatedOn() {
+        updatedOn = new Date();
+    }
 }

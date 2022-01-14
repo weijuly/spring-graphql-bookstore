@@ -11,20 +11,20 @@ import org.slf4j.LoggerFactory;
 
 public class AddAuthorResultResolver implements TypeResolver {
 
-	private static final Logger logger = LoggerFactory.getLogger(BookStoreDataFetchers.class);
+    private static final Logger logger = LoggerFactory.getLogger(BookStoreDataFetchers.class);
 
-	@Override
-	public GraphQLObjectType getType(TypeResolutionEnvironment env) {
-		if (env.getObject() instanceof AuthorModel) {
-			logger.info("AddAuthorResultResolver: resolved to AddAuthorError");
-			return env.getSchema().getObjectType("Author");
-		} else if (env.getObject() instanceof AddAuthorErrorModel) {
-			logger.info("AddAuthorResultResolver: resolved to AddAuthorError");
-			return env.getSchema().getObjectType("AddAuthorError");
-		} else {
-			logger.info("AddAuthorResultResolver: cannot resolve");
-			return null;
-		}
-	}
+    @Override
+    public GraphQLObjectType getType(TypeResolutionEnvironment env) {
+        if (env.getObject() instanceof AuthorModel) {
+            logger.info("AddAuthorResultResolver: resolved to AddAuthorError");
+            return env.getSchema().getObjectType("Author");
+        } else if (env.getObject() instanceof AddAuthorErrorModel) {
+            logger.info("AddAuthorResultResolver: resolved to AddAuthorError");
+            return env.getSchema().getObjectType("AddAuthorError");
+        } else {
+            logger.info("AddAuthorResultResolver: cannot resolve");
+            return null;
+        }
+    }
 
 }

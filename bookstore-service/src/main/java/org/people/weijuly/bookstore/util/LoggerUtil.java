@@ -7,16 +7,16 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 public class LoggerUtil {
 
-	public static String format(Exception e) {
-		return String.format("[%s: %s], caused by: %s",
-				e.getClass().getName(), e.getMessage(), ExceptionUtils.getRootCauseMessage(e));
-	}
+    public static String format(Exception e) {
+        return String.format("[%s: %s], caused by: %s",
+                e.getClass().getName(), e.getMessage(), ExceptionUtils.getRootCauseMessage(e));
+    }
 
-	public static String dump(Object object) {
-		try {
-			return new ObjectMapper().writeValueAsString(object);
-		} catch (JsonProcessingException e) {
-			return StringUtils.EMPTY;
-		}
-	}
+    public static String dump(Object object) {
+        try {
+            return new ObjectMapper().writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            return StringUtils.EMPTY;
+        }
+    }
 }
