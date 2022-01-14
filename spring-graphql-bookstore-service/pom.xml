@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.2</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>org.people.weijuly</groupId>
+	<artifactId>spring-graphql-bookstore-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>spring-graphql-bookstore-service</name>
+	<description>spring-graphql-bookstore-service</description>
+
+	<developers>
+		<developer>
+			<id>gopikrishnan.ganesan</id>
+			<name>GopiKrishnan Ganesan</name>
+			<email>gopikrishnan.ganesan@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Asia/Calcutta</timezone>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://github.com/weijuly/spring-graphql-bookstore</connection>
+		<developerConnection>scm:git:https://github.com/weijuly/spring-graphql-bookstore</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/weijuly/spring-graphql-bookstore</url>
+	</scm>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<graphql.version>11.1.0</graphql.version>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>graphql-spring-boot-starter</artifactId>
+			<version>${graphql.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.graphql-java-kickstart</groupId>
+			<artifactId>graphiql-spring-boot-starter</artifactId>
+			<version>${graphql.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>io.github.kobylynskyi</groupId>
+				<artifactId>graphql-codegen-maven-plugin</artifactId>
+				<version>5.3.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<graphqlSchemaPaths>
+								<graphqlSchemaPath>${project.basedir}/src/main/resources/schema.graphqls
+								</graphqlSchemaPath>
+							</graphqlSchemaPaths>
+							<outputDir>${project.build.directory}/generated-sources/graphql</outputDir>
+							<packageName>org.people.weijuly.bookstore.model</packageName>
+							<modelNameSuffix>Model</modelNameSuffix>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>org/people/weijuly/bookstore/data/*</exclude>
+						<exclude>org/people/weijuly/bookstore/model/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.spotify</groupId>
+						<artifactId>dockerfile-maven-plugin</artifactId>
+						<version>1.4.13</version>
+						<executions>
+							<execution>
+								<id>default</id>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<repository>${project.artifactId}</repository>
+							<tag>${project.version}-${maven.build.timestamp}</tag>
+							<buildArgs>
+								<APP_JAR>${project.build.finalName}.jar</APP_JAR>
+							</buildArgs>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>
