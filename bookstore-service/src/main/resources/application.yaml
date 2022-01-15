@@ -15,7 +15,7 @@ graphql:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/bookstore
+    url: @database.url@
     driverClassName: com.mysql.cj.jdbc.Driver
     username: bookstore
     password: bookstore
