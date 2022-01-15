@@ -1,0 +1,11 @@
+query {
+    searchBookByAuthor(name: "es") {
+        ... on Book {
+            id
+            isbn
+            name
+            pages
+            price
+        }
+    }
+}

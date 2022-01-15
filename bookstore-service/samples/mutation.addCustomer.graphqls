@@ -1,0 +1,16 @@
+mutation {
+    addCustomer(customer: {
+        firstName: "GopiKrishnan",
+        lastName: "Ganesan"
+    }) {
+        ... on Customer {
+            id
+            firstName
+            lastName
+        }
+        ... on BookStoreError {
+            message
+            status
+        }
+    }
+}

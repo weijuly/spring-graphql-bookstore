@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import graphql.schema.DataFetcher;
 import org.people.weijuly.bookstore.model.AddBookMutationResolver;
 import org.people.weijuly.bookstore.model.AddBookResultModel;
+import org.people.weijuly.bookstore.model.AddCustomerMutationResolver;
+import org.people.weijuly.bookstore.model.AddCustomerResultModel;
 import org.people.weijuly.bookstore.model.AuthorModel;
 import org.people.weijuly.bookstore.model.AuthorsQueryResolver;
 import org.people.weijuly.bookstore.model.BookInModel;
 import org.people.weijuly.bookstore.model.BookModel;
+import org.people.weijuly.bookstore.model.CustomerInModel;
 import org.people.weijuly.bookstore.model.SearchBookByAuthorQueryResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.people.weijuly.bookstore.util.BookStoreConstants.bookArg;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.customerArg;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.nameArg;
 
 @Component
 public class BookStoreDataFetchers {
@@ -31,6 +36,9 @@ public class BookStoreDataFetchers {
 
     @Autowired
     private SearchBookByAuthorQueryResolver searchBookByAuthorQueryResolver;
+
+    @Autowired
+    private AddCustomerMutationResolver addCustomerMutationResolver;
 
     @Autowired
     private ObjectMapper mapper;
@@ -52,8 +60,15 @@ public class BookStoreDataFetchers {
 
     public DataFetcher<List<BookModel>> searchBookByAuthor() {
         return env -> {
-            String name = mapper.convertValue(env.getArgument("name"), String.class);
+            String name = mapper.convertValue(env.getArgument(nameArg), String.class);
             return searchBookByAuthorQueryResolver.searchBookByAuthor(name);
+        };
+    }
+
+    public DataFetcher<AddCustomerResultModel> addCustomer() {
+        return env -> {
+            CustomerInModel customerIn = mapper.convertValue(env.getArgument(customerArg), CustomerInModel.class);
+            return addCustomerMutationResolver.addCustomer(customerIn);
         };
     }
 

@@ -1,0 +1,26 @@
+mutation {
+    addBook(book: {
+        name: "Girl In Spiders Web",
+        isbn: "1234567390",
+        year: 2020,
+        pages: 200,
+        author: {
+            firstName: "Jules",
+            lastName: "Verne"
+        },
+        tags: [
+            ROMANCE
+        ],
+        price: 1234,
+        copies: 100
+    }) {
+        ... on Book {
+            id
+            updatedOn
+        }
+        ... on BookStoreError {
+            message
+            status
+        }
+    }
+}

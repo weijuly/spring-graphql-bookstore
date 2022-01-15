@@ -46,7 +46,8 @@ create table BOOK_TAGS (
 create table CUSTOMER (
     ID              VARCHAR(64)         PRIMARY KEY,
     FIRST_NAME      VARCHAR(64)         NOT NULL,
-    LAST_NAME       VARCHAR(64)         NOT NULL
+    LAST_NAME       VARCHAR(64)         NOT NULL,
+    constraint C_FULL_NAME UNIQUE(FIRST_NAME, LAST_NAME)
 );
 
 create table PURCHASES (

@@ -19,9 +19,11 @@ import java.nio.charset.Charset;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.AddBookResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.AddCustomerResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.MutationType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.QueryType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addBookMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.addCustomerMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByAuthorQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByIdQuery;
 import static org.springframework.util.StreamUtils.copyToString;
@@ -70,9 +72,12 @@ public class GraphQLProvider {
                         .dataFetcher(searchBookByIdQuery, fetchers.searchBookById())
                         .dataFetcher("authors", fetchers.authors()))
                 .type(MutationType, typeWiring -> typeWiring
+                        .dataFetcher(addCustomerMutation, fetchers.addCustomer())
                         .dataFetcher(addBookMutation, fetchers.addBook()))
                 .type(AddBookResultType, typeWiring -> typeWiring
                         .typeResolver(resolvers.addBookResultResolver()))
+                .type(AddCustomerResultType, typeWiring -> typeWiring
+                        .typeResolver(resolvers.addCustomerResultResolver()))
                 .build();
     }
 
