@@ -12,7 +12,6 @@ use bookstore;
 
 drop table if exists BOOK;
 drop table if exists AUTHOR;
-drop table if exists TAG_LOOKUP;
 drop table if exists BOOK_TAGS;
 drop table if exists CUSTOMER;
 drop table if exists PURCHASES;
@@ -38,15 +37,10 @@ create table AUTHOR (
     constraint C_FULL_NAME UNIQUE(FIRST_NAME, LAST_NAME)
 );
 
-create table TAG_LOOKUP (
-    ID              VARCHAR(64)         PRIMARY KEY,
-    NAME            VARCHAR(64)         NOT NULL UNIQUE
-);
-
 create table BOOK_TAGS (
     ID              VARCHAR(64)         PRIMARY KEY,
     BOOK_ID         VARCHAR(64)         NOT NULL,
-    TAG_ID          VARCHAR(64)         NOT NULL
+    TAG             VARCHAR(64)         NOT NULL
 );
 
 create table CUSTOMER (
@@ -74,14 +68,6 @@ create table LIKES (
     CUSTOMER_ID     VARCHAR(64)         NOT NULL,
     BOOK_ID         VARCHAR(64)         NOT NULL
 );
-
-insert into TAG_LOOKUP
-    (ID, NAME)
-values
-    (UUID(), "FICTION"),
-    (UUID(), "POLITICS"),
-    (UUID(), "ROMANCE"),
-    (UUID(), "THRILLER");
 
 insert into AUTHOR
     (ID, FIRST_NAME, LAST_NAME)
@@ -135,47 +121,45 @@ values
     (UUID(), UUID(), 'Nineteen Eighty-Four', 1843, 700, 100, 100, '2021-12-30', @author),
     (UUID(), UUID(), 'A Dressed Man and a Naked Man', 1843, 700, 100, 100, '2021-12-30', @author);
 
-set @tag := (select ID from TAG_LOOKUP where NAME = 'FICTION');
 insert into BOOK_TAGS
-    (ID, BOOK_ID, TAG_ID)
+    (ID, BOOK_ID, TAG)
 values
-    (UUID(), (select ID from BOOK where NAME = 'A Christmas Carol'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'The Pickwick Papers'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Oliver Twist'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Nicholas Nickleby'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Bleak House'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'David Copperfield'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Hard Times'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'A Tale of Two Cities'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Great Expectations'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'The Battle of Life'), @tag);
+    (UUID(), (select ID from BOOK where NAME = 'A Christmas Carol'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'The Pickwick Papers'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'Oliver Twist'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'Nicholas Nickleby'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'Bleak House'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'David Copperfield'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'Hard Times'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'A Tale of Two Cities'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'Great Expectations'), 'FICTION'),
+    (UUID(), (select ID from BOOK where NAME = 'The Battle of Life'), 'FICTION');
 
-set @tag := (select ID from TAG_LOOKUP where NAME = 'THRILLER');
 insert into BOOK_TAGS
-    (ID, BOOK_ID, TAG_ID)
+    (ID, BOOK_ID, TAG)
 values
-    (UUID(), (select ID from BOOK where NAME = 'Five Weeks in a Balloon'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'The Adventures of Captain Hatteras'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Journey to the Center of the Earth'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'From the Earth to the Moon'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'In Search of the Castaways'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Twenty Thousand Leagues Under the Sea'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Around the Moon'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'A Floating City'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Around the World in Eighty Days'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'The Mysterious Island'), @tag);
+    (UUID(), (select ID from BOOK where NAME = 'Five Weeks in a Balloon'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'The Adventures of Captain Hatteras'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'Journey to the Center of the Earth'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'From the Earth to the Moon'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'In Search of the Castaways'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'Twenty Thousand Leagues Under the Sea'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'Around the Moon'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'A Floating City'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'Around the World in Eighty Days'), 'THRILLER'),
+    (UUID(), (select ID from BOOK where NAME = 'The Mysterious Island'), 'THRILLER');
 
-set @tag := (select ID from TAG_LOOKUP where NAME = 'POLITICS');
 insert into BOOK_TAGS
-    (ID, BOOK_ID, TAG_ID)
+    (ID, BOOK_ID, TAG)
 values
-    (UUID(), (select ID from BOOK where NAME = 'Down and Out in Paris and London'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Burmese Days'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'A Clergymans Daughter'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Keep the Aspidistra Flying'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'The Road to Wigan Pier'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Homage to Catalonia'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Coming Up for Air'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Animal Farm'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'Nineteen Eighty-Four'), @tag),
-    (UUID(), (select ID from BOOK where NAME = 'A Dressed Man and a Naked Man'), @tag);
+    (UUID(), (select ID from BOOK where NAME = 'Down and Out in Paris and London'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'Burmese Days'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'A Clergymans Daughter'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'Keep the Aspidistra Flying'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'The Road to Wigan Pier'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'Homage to Catalonia'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'Coming Up for Air'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'Animal Farm'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'Nineteen Eighty-Four'), 'POLITICS'),
+    (UUID(), (select ID from BOOK where NAME = 'A Dressed Man and a Naked Man'), 'POLITICS');
+

@@ -2,19 +2,26 @@ package org.people.weijuly.bookstore.graphql.impl.mutation;
 
 import org.people.weijuly.bookstore.converter.AuthorConverter;
 import org.people.weijuly.bookstore.converter.BookConverter;
+import org.people.weijuly.bookstore.converter.BookTagConverter;
 import org.people.weijuly.bookstore.data.AuthorEntity;
 import org.people.weijuly.bookstore.data.AuthorRepository;
 import org.people.weijuly.bookstore.data.BookEntity;
 import org.people.weijuly.bookstore.data.BookRepository;
+import org.people.weijuly.bookstore.data.BookTagEntity;
+import org.people.weijuly.bookstore.data.BookTagRepository;
 import org.people.weijuly.bookstore.graphql.BookStoreDataFetchers;
 import org.people.weijuly.bookstore.model.AddBookMutationResolver;
 import org.people.weijuly.bookstore.model.AddBookResultModel;
 import org.people.weijuly.bookstore.model.AuthorInModel;
 import org.people.weijuly.bookstore.model.BookInModel;
+import org.people.weijuly.bookstore.model.TagModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.people.weijuly.bookstore.util.ErrorUtil.bookStoreError;
 import static org.people.weijuly.bookstore.util.LoggerUtil.dump;
@@ -31,12 +38,16 @@ public class AddBookMutationResolverImpl implements AddBookMutationResolver {
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private BookTagRepository bookTagRepository;
+
     @Override
     public AddBookResultModel addBook(BookInModel bookIn) throws Exception {
         try {
             AuthorEntity authorEntity = fetchOrSave(bookIn.getAuthor());
             BookEntity bookEntity = fetchOrSave(bookIn, authorEntity);
-            return BookConverter.convert(bookEntity, authorEntity);
+            List<BookTagEntity> bookTagsEntities = fetchOrSave(bookIn.getTags(), bookEntity.getId());
+            return BookConverter.convert(bookEntity, authorEntity, bookTagsEntities);
         } catch (Exception e) {
             logger.error(format(e));
             return bookStoreError();
@@ -71,5 +82,18 @@ public class AddBookMutationResolverImpl implements AddBookMutationResolver {
     private BookEntity save(BookInModel bookIn, String authorId) {
         logger.info("AddBookMutationResolverImpl: save: {}", dump(bookIn));
         return bookRepository.save(BookConverter.convert(bookIn, authorId));
+
+    }
+
+    private List<BookTagEntity> fetchOrSave(List<TagModel> tags, String bookId) {
+        List<BookTagEntity> bookTagEntities = bookTagRepository.findByBookId(bookId);
+        if (!bookTagEntities.isEmpty()) {
+            return bookTagEntities;
+        }
+        return tags
+                .stream()
+                .map(tag -> BookTagConverter.convert(tag, bookId))
+                .map(bookTagRepository::save)
+                .collect(Collectors.toList());
     }
 }

@@ -2,10 +2,14 @@ package org.people.weijuly.bookstore.converter;
 
 import org.people.weijuly.bookstore.data.AuthorEntity;
 import org.people.weijuly.bookstore.data.BookEntity;
+import org.people.weijuly.bookstore.data.BookTagEntity;
 import org.people.weijuly.bookstore.model.BookInModel;
 import org.people.weijuly.bookstore.model.BookModel;
+import org.people.weijuly.bookstore.model.TagModel;
 
-import java.util.Collections;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookConverter {
 
@@ -21,7 +25,8 @@ public class BookConverter {
         return entity;
     }
 
-    public static BookModel convert(BookEntity bookEntity, AuthorEntity authorEntity) {
+    public static BookModel convert(BookEntity bookEntity, AuthorEntity authorEntity,
+                                    List<BookTagEntity> bookTagEntities) {
         BookModel model = new BookModel();
         model.setId(bookEntity.getId());
         model.setIsbn(bookEntity.getIsbn());
@@ -29,11 +34,19 @@ public class BookConverter {
         model.setYear(bookEntity.getYear());
         model.setPrice(bookEntity.getPrice());
         model.setPages(bookEntity.getPages());
-        model.setTags(Collections.emptyList());
+        model.setTags(tags(bookTagEntities));
         model.setUpdatedOn(bookEntity.getUpdatedOn().toString());
+        model.setUpdatedOn(new SimpleDateFormat("yyyy-MM-dd").format(bookEntity.getUpdatedOn()));
         model.setStats(null);
         model.setAuthor(AuthorConverter.convert(authorEntity));
         return model;
+    }
+
+    private static List<TagModel> tags(List<BookTagEntity> bookTagEntities) {
+        return bookTagEntities
+                .stream()
+                .map(BookTagConverter::convert)
+                .collect(Collectors.toList());
     }
 
 }

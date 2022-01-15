@@ -43,6 +43,7 @@ class SearchBookByAuthorQueryResolverImplTest {
                 .thenReturn(Arrays.asList(bookEntity(), bookEntity()));
         List<BookModel> books = impl.searchBookByAuthor("name");
         assertNotNull(books);
+        System.out.println(books.size());
         // TODO: fix this: assertEquals(books.size(), 4);
     }
 

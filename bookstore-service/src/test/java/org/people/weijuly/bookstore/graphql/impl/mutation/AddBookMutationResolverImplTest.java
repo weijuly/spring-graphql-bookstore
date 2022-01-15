@@ -9,16 +9,20 @@ import org.people.weijuly.bookstore.data.AuthorEntity;
 import org.people.weijuly.bookstore.data.AuthorRepository;
 import org.people.weijuly.bookstore.data.BookEntity;
 import org.people.weijuly.bookstore.data.BookRepository;
+import org.people.weijuly.bookstore.data.BookTagEntity;
+import org.people.weijuly.bookstore.data.BookTagRepository;
 import org.people.weijuly.bookstore.model.AddBookResultModel;
 import org.people.weijuly.bookstore.model.AuthorInModel;
 import org.people.weijuly.bookstore.model.BookInModel;
 import org.people.weijuly.bookstore.model.BookModel;
 import org.people.weijuly.bookstore.model.BookStoreErrorModel;
+import org.people.weijuly.bookstore.model.TagModel;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.Optional;
 
+import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,6 +38,9 @@ class AddBookMutationResolverImplTest {
     @Mock
     AuthorRepository authorRepository;
 
+    @Mock
+    BookTagRepository bookTagRepository;
+
     @InjectMocks
     AddBookMutationResolverImpl impl;
 
@@ -48,6 +55,8 @@ class AddBookMutationResolverImplTest {
                 .when(bookRepository.findByName(anyString())).thenReturn(Optional.of(bookEntity()));
         lenient()
                 .when(bookRepository.save(any())).thenReturn(bookEntity());
+        lenient()
+                .when(bookTagRepository.findByBookId(anyString())).thenReturn(singletonList(bookTagEntity()));
         AddBookResultModel result = impl.addBook(bookIn());
         assertTrue(result instanceof BookModel);
 
@@ -100,6 +109,12 @@ class AddBookMutationResolverImplTest {
         bookEntity.setName("NAME");
         bookEntity.setUpdatedOn(new Date());
         return bookEntity;
+    }
+
+    private BookTagEntity bookTagEntity() {
+        BookTagEntity bookTagEntity = new BookTagEntity();
+        bookTagEntity.setTag(TagModel.ROMANCE.name());
+        return bookTagEntity;
     }
 
 }
