@@ -1,0 +1,503 @@
+{
+	"info": {
+		"_postman_id": "c92972df-cfcc-45f8-8eb6-19f7f84eed59",
+		"name": "graphql-bookstore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "searchAuthorById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    searchAuthorById(authorId: \"c4ce559c-7d97-11ec-ab46-0242ac110002\") {\n        ... on Author {\n            id\n            firstName\n            lastName\n        }\n        ... on BookStoreError {\n            status\n            message\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchAuthorsByName",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    searchAuthorsByName(name: \"\") {\n        ... on Authors {\n            authors {\n                id\n                firstName\n                lastName\n            }\n        }\n        ... on BookStoreError {\n            status\n            message\n        }\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchBookById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchBookById(bookId: \"d7ce2cc2-7da9-11ec-a301-\") {\n    ... on Book {\n      id\n      isbn\n      name\n      pages\n      price\n      year\n      author {\n        id\n        firstName\n        lastName\n      }\n      tags\n      updatedOn\n      stats {\n        copies\n        purchases\n        lends\n        likes\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchBooksByName",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchBooksByName(name: \"es\") {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchBooksByTag",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchBooksByTag(tag: POLITICS) {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchBooksByYear",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchBooksByYear(year: 1843) {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchBooksByAuthorId",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchBooksByAuthorId(authorId: \"d7cdaa9a-7da9-11ec-a301-0242ac110002\") {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchBooksByAuthorName",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchBooksByAuthorName(name: \"es\") {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchCustomerById",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchCustomerById(customerId: \"b7bb59b4-bdff-47ed-8420-7a44f4ff88bd\") {\n    ... on Customer {\n      id\n      firstName\n      lastName\n      purchases {\n        id\n        purchasedOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      lendings {\n        id\n        dueOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      likes {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchCustomersByName",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchCustomersByName(name: \"es\") {\n    ... on Customers {\n      customers {\n        id\n        firstName\n        lastName\n        purchases {\n          id\n          purchasedOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        lendings {\n          id\n          dueOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        likes {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchCustomersByBookPurchased",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchCustomersByBookPurchased(bookId: \"es\") {\n    ... on Customers {\n      customers {\n        id\n        firstName\n        lastName\n        purchases {\n          id\n          purchasedOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        lendings {\n          id\n          dueOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        likes {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchCustomersByBookLend",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchCustomersByBookLend(bookId: \"es\") {\n    ... on Customers {\n      customers {\n        id\n        firstName\n        lastName\n        purchases {\n          id\n          purchasedOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        lendings {\n          id\n          dueOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        likes {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchCustomersByBookLiked",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\n  searchCustomersByBookLiked(bookId: \"es\") {\n    ... on Customers {\n      customers {\n        id\n        firstName\n        lastName\n        purchases {\n          id\n          purchasedOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        lendings {\n          id\n          dueOn\n          book {\n            id\n            isbn\n            name\n            pages\n            price\n            year\n            author {\n              id\n              firstName\n              lastName\n            }\n            tags\n            updatedOn\n            stats {\n              copies\n              purchases\n              lends\n              likes\n            }\n          }\n        }\n        likes {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBook",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  addBook(book: {name: \"Girl In Spiders Web\", isbn: \"1234567390\", year: 2020, pages: 200, author: {firstName: \"Jules\", lastName: \"Verne\"}, tags: [ROMANCE], price: 1234, copies: 100}) {\n    ... on Book {\n      id\n      isbn\n      name\n      pages\n      price\n      year\n      author {\n        id\n        firstName\n        lastName\n      }\n      tags\n      updatedOn\n      stats {\n        copies\n        purchases\n        lends\n        likes\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  addCustomer(customer: {firstName: \"GopiKrishnan\", lastName: \"Ganesan\"}) {\n    ... on Customer {\n      id\n      firstName\n      lastName\n      purchases {\n        id\n        purchasedOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      lendings {\n        id\n        dueOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      likes {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "purchaseBooks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  purchaseBooks(cart: {customerId: \"d40b97c1-711d-4a80-9519-9b6635ff6a2b\", books: [\"e05e0641-7e96-11ec-809a-0242ac110002\", \"e05e07f0-7e96-11ec-809a-0242ac110002\"]}) {\n    ... on Customer {\n      id\n      firstName\n      lastName\n      purchases {\n        id\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n        purchasedOn\n      }\n      lendings {\n        id\n        dueOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      likes {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lendBooks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  lendBooks(cart: {customerId: \"d40b97c1-711d-4a80-9519-9b6635ff6a2b\", books: [\"e05e0641-7e96-11ec-809a-0242ac110002\", \"e05e07f0-7e96-11ec-809a-0242ac110002\"]}) {\n    ... on Customer {\n      id\n      firstName\n      lastName\n      purchases {\n        id\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n        purchasedOn\n      }\n      lendings {\n        id\n        dueOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      likes {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "returnBooks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  returnBooks(cart: {customerId: \"d40b97c1-711d-4a80-9519-9b6635ff6a2b\", books: [\"e05e0641-7e96-11ec-809a-0242ac110002\", \"e05e07f0-7e96-11ec-809a-0242ac110002\"]}) {\n    ... on Customer {\n      id\n      firstName\n      lastName\n      purchases {\n        id\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n        purchasedOn\n      }\n      lendings {\n        id\n        dueOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      likes {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "likeBook",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n  likeBook(like: {\n      customerId: \"d40b97c1-711d-4a80-9519-9b6635ff6a2b\"\n      bookId: \"e05e0641-7e96-11ec-809a-0242ac110002\"\n      }) {\n    ... on Customer {\n      id\n      firstName\n      lastName\n      purchases {\n        id\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n        purchasedOn\n      }\n      lendings {\n        id\n        dueOn\n        book {\n          id\n          isbn\n          name\n          pages\n          price\n          year\n          author {\n            id\n            firstName\n            lastName\n          }\n          tags\n          updatedOn\n          stats {\n            copies\n            purchases\n            lends\n            likes\n          }\n        }\n      }\n      likes {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      message\n      status\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

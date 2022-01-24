@@ -18,14 +18,33 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.AddBookResultType;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.AddCustomerResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.AuthorResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.AuthorsResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.BookResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.BooksResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.CustomerResultType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.CustomersResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.MutationType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.QueryType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addBookMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addCustomerMutation;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByAuthorQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.lendBooksMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.likeBookMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.purchaseBooksMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.returnBooksMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchAuthorByIdQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchAuthorsByNameQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBookByIdQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBooksByAuthorIdQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBooksByAuthorNameQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBooksByNameQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBooksByTagQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchBooksByYearQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomerByIdQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookLendQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookLikedQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookPurchasedQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByNameQuery;
 import static org.springframework.util.StreamUtils.copyToString;
 
 @Component
@@ -41,10 +60,13 @@ public class GraphQLProvider {
     private String specFilePath;
 
     @Autowired
-    private BookStoreDataFetchers fetchers;
+    private BookStoreQueryDataFetchers queryDataFetchers;
 
     @Autowired
-    private BookStoreTypeResolvers resolvers;
+    private BookStoreMutationDataFetchers mutationDataFetchers;
+
+    @Autowired
+    private BookStoreTypeResolvers typeResolvers;
 
     @Bean
     public GraphQLSchema schema() {
@@ -68,16 +90,38 @@ public class GraphQLProvider {
     private RuntimeWiring wiring() {
         return newRuntimeWiring()
                 .type(QueryType, typeWiring -> typeWiring
-                        .dataFetcher(searchBookByAuthorQuery, fetchers.searchBookByAuthor())
-                        .dataFetcher(searchBookByIdQuery, fetchers.searchBookById())
-                        .dataFetcher("authors", fetchers.authors()))
+                        .dataFetcher(searchAuthorByIdQuery, queryDataFetchers.searchAuthorById())
+                        .dataFetcher(searchAuthorsByNameQuery, queryDataFetchers.searchAuthorsByName())
+                        .dataFetcher(searchBookByIdQuery, queryDataFetchers.searchBookById())
+                        .dataFetcher(searchBooksByAuthorIdQuery, queryDataFetchers.searchBooksByAuthorId())
+                        .dataFetcher(searchBooksByAuthorNameQuery, queryDataFetchers.searchBooksByAuthorName())
+                        .dataFetcher(searchBooksByNameQuery, queryDataFetchers.searchBooksByName())
+                        .dataFetcher(searchBooksByTagQuery, queryDataFetchers.searchBooksByTag())
+                        .dataFetcher(searchBooksByYearQuery, queryDataFetchers.searchBooksByYear())
+                        .dataFetcher(searchCustomerByIdQuery, queryDataFetchers.searchCustomerById())
+                        .dataFetcher(searchCustomersByBookLendQuery, queryDataFetchers.searchCustomersByBookLend())
+                        .dataFetcher(searchCustomersByBookLikedQuery, queryDataFetchers.searchCustomersByBookLiked())
+                        .dataFetcher(searchCustomersByBookPurchasedQuery, queryDataFetchers.searchCustomersByBookPurchased())
+                        .dataFetcher(searchCustomersByNameQuery, queryDataFetchers.searchCustomersByName()))
                 .type(MutationType, typeWiring -> typeWiring
-                        .dataFetcher(addCustomerMutation, fetchers.addCustomer())
-                        .dataFetcher(addBookMutation, fetchers.addBook()))
-                .type(AddBookResultType, typeWiring -> typeWiring
-                        .typeResolver(resolvers.addBookResultResolver()))
-                .type(AddCustomerResultType, typeWiring -> typeWiring
-                        .typeResolver(resolvers.addCustomerResultResolver()))
+                        .dataFetcher(addCustomerMutation, mutationDataFetchers.addCustomer())
+                        .dataFetcher(purchaseBooksMutation, mutationDataFetchers.purchaseBooks())
+                        .dataFetcher(lendBooksMutation, mutationDataFetchers.lendBooks())
+                        .dataFetcher(returnBooksMutation, mutationDataFetchers.returnBooks())
+                        .dataFetcher(likeBookMutation, mutationDataFetchers.likeBook())
+                        .dataFetcher(addBookMutation, mutationDataFetchers.addBook()))
+                .type(AuthorResultType, typeWiring -> typeWiring
+                        .typeResolver(typeResolvers.authorResultTypeResolver()))
+                .type(AuthorsResultType, typeWiring -> typeWiring
+                        .typeResolver(typeResolvers.authorsResultTypeResolver()))
+                .type(BookResultType, typeWiring -> typeWiring
+                        .typeResolver(typeResolvers.bookResultTypeResolver()))
+                .type(BooksResultType, typeWiring -> typeWiring
+                        .typeResolver(typeResolvers.booksResultTypeResolver()))
+                .type(CustomerResultType, typeWiring -> typeWiring
+                        .typeResolver(typeResolvers.customerResultTypeResolver()))
+                .type(CustomersResultType, typeWiring -> typeWiring
+                        .typeResolver(typeResolvers.customersResultTypeResolver()))
                 .build();
     }
 

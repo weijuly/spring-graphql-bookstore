@@ -14,9 +14,9 @@ drop table if exists BOOK;
 drop table if exists AUTHOR;
 drop table if exists BOOK_TAGS;
 drop table if exists CUSTOMER;
-drop table if exists PURCHASES;
-drop table if exists LENDINGS;
-drop table if exists LIKES;
+drop table if exists PURCHASE;
+drop table if exists LENDING;
+drop table if exists BOOK_LIKE;
 
 create table BOOK (
     ID              VARCHAR(64)         PRIMARY KEY,
@@ -50,24 +50,26 @@ create table CUSTOMER (
     constraint C_FULL_NAME UNIQUE(FIRST_NAME, LAST_NAME)
 );
 
-create table PURCHASES (
+create table PURCHASE (
     ID              VARCHAR(64)         PRIMARY KEY,
     CUSTOMER_ID     VARCHAR(64)         NOT NULL,
     BOOK_ID         VARCHAR(64)         NOT NULL,
     PURCHASED_ON    DATE                NOT NULL
 );
 
-create table LENDINGS (
+create table LENDING (
     ID              VARCHAR(64)         PRIMARY KEY,
     CUSTOMER_ID     VARCHAR(64)         NOT NULL,
     BOOK_ID         VARCHAR(64)         NOT NULL,
-    DUE_ON          DATE                NOT NULL
+    DUE_ON          DATE                NOT NULL,
+    STATUS          CHAR(1)             NOT NULL
 );
 
-create table LIKES (
+create table BOOK_LIKE (
     ID              VARCHAR(64)         PRIMARY KEY,
     CUSTOMER_ID     VARCHAR(64)         NOT NULL,
-    BOOK_ID         VARCHAR(64)         NOT NULL
+    BOOK_ID         VARCHAR(64)         NOT NULL,
+    constraint C_BOOK_LIKE UNIQUE(CUSTOMER_ID, BOOK_ID)
 );
 
 insert into AUTHOR

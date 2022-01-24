@@ -11,10 +11,10 @@ import org.people.weijuly.bookstore.data.BookEntity;
 import org.people.weijuly.bookstore.data.BookRepository;
 import org.people.weijuly.bookstore.data.BookTagEntity;
 import org.people.weijuly.bookstore.data.BookTagRepository;
-import org.people.weijuly.bookstore.model.AddBookResultModel;
 import org.people.weijuly.bookstore.model.AuthorInModel;
 import org.people.weijuly.bookstore.model.BookInModel;
 import org.people.weijuly.bookstore.model.BookModel;
+import org.people.weijuly.bookstore.model.BookResultModel;
 import org.people.weijuly.bookstore.model.BookStoreErrorModel;
 import org.people.weijuly.bookstore.model.TagModel;
 
@@ -57,7 +57,7 @@ class AddBookMutationResolverImplTest {
                 .when(bookRepository.save(any())).thenReturn(bookEntity());
         lenient()
                 .when(bookTagRepository.findByBookId(anyString())).thenReturn(singletonList(bookTagEntity()));
-        AddBookResultModel result = impl.addBook(bookIn());
+        BookResultModel result = impl.addBook(bookIn());
         assertTrue(result instanceof BookModel);
 
     }
@@ -68,7 +68,7 @@ class AddBookMutationResolverImplTest {
         doThrow(new RuntimeException())
                 .when(authorRepository)
                 .findByFirstNameAndLastName(authorIn().getFirstName(), authorIn().getLastName());
-        AddBookResultModel result = impl.addBook(bookIn());
+        BookResultModel result = impl.addBook(bookIn());
         assertTrue(result instanceof BookStoreErrorModel);
     }
 

@@ -4,12 +4,23 @@ schema {
 }
 
 type Query {
-    searchBookById(id: ID!): Book
-    authors: [Author!]!
-    """
-    Search for books by an author with a part of author's name
-    """
-    searchBookByAuthor(name: String!): [Book!]!
+
+    searchAuthorById(authorId: ID!): AuthorResult!
+    searchAuthorsByName(name: String!): AuthorsResult!
+
+    searchBookById(bookId: ID!): BookResult!
+    searchBooksByName(name: String!): BooksResult!
+    searchBooksByTag(tag: Tag!): BooksResult!
+    searchBooksByYear(year: Int!): BooksResult!
+
+    searchBooksByAuthorId(authorId: ID!): BooksResult!
+    searchBooksByAuthorName(name: String!): BooksResult!
+
+    searchCustomerById(customerId: ID!): CustomerResult!
+    searchCustomersByName(name: String!): CustomersResult!
+    searchCustomersByBookPurchased(bookId: ID!): CustomersResult!
+    searchCustomersByBookLend(bookId: ID!): CustomersResult!
+    searchCustomersByBookLiked(bookId: ID!): CustomersResult!
 }
 
 type Mutation {
@@ -18,20 +29,30 @@ type Mutation {
     If the author of the book doesn't exist, an entry for the author is automatically created
     If the book exists already, the price of the book is overwritten and the number of copies is added
     """
-    addBook(book: BookIn!): AddBookResult!
-    "Add a customer to the store. Once added, the customer can purchase or lend books"
-    addCustomer(customer: CustomerIn!): AddCustomerResult!
+    addBook(book: BookIn!): BookResult!
+    """
+    Add a customer to the store. Once added, the customer can purchase or lend books
+    """
+    addCustomer(customer: CustomerIn!): CustomerResult!
+
+    purchaseBooks(cart: CartIn!): CustomerResult!
+
+    lendBooks(cart: CartIn!): CustomerResult!
+
+    returnBooks(cart: CartIn!): CustomerResult!
+
+    likeBook(like: LikeIn!): CustomerResult!
 }
 
 """
 Result of an add book operation
 """
-union AddBookResult = Book | BookStoreError
-
-"""
-Result of an add customer operation
-"""
-union AddCustomerResult = Customer | BookStoreError
+union BookResult = Book | BookStoreError
+union BooksResult = Books | BookStoreError
+union AuthorResult = Author | BookStoreError
+union AuthorsResult = Authors | BookStoreError
+union CustomerResult = Customer | BookStoreError
+union CustomersResult = Customers | BookStoreError
 
 type Book {
     """
@@ -75,6 +96,11 @@ type Book {
     """
     stats: BookStats
 }
+
+type Books {
+    books: [Book!]!
+}
+
 """
 Information about the book added to the bookstore
 """
@@ -114,7 +140,6 @@ input BookIn {
 }
 
 type BookStats {
-    id: ID!
     copies: Int!
     purchases: Int!
     lends: Int!
@@ -136,6 +161,10 @@ type Author {
     Last name of the author
     """
     lastName: String!
+}
+
+type Authors {
+    authors: [Author!]!
 }
 
 """
@@ -179,6 +208,10 @@ type Customer {
     likes: [Book!]!
 }
 
+type Customers {
+    customers: [Customer!]!
+}
+
 input CustomerIn {
     """
     First name of the customer
@@ -200,6 +233,16 @@ type Lending {
     id: ID!
     book: Book!
     dueOn: String!
+}
+
+input CartIn {
+    customerId: ID!
+    books: [ID!]!
+}
+
+input LikeIn {
+    customerId: ID!
+    bookId: ID!
 }
 
 enum Tag {

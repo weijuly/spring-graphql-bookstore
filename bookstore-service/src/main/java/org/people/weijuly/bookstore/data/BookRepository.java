@@ -11,4 +11,8 @@ public interface BookRepository extends CrudRepository<BookEntity, String> {
 
     List<BookEntity> findByAuthorId(String authorId);
 
+    List<BookEntity> findByNameContaining(String name);
+
+    List<BookEntity> findByYear(Integer year);
+
 }

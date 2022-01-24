@@ -9,11 +9,11 @@ import org.people.weijuly.bookstore.data.BookEntity;
 import org.people.weijuly.bookstore.data.BookRepository;
 import org.people.weijuly.bookstore.data.BookTagEntity;
 import org.people.weijuly.bookstore.data.BookTagRepository;
-import org.people.weijuly.bookstore.graphql.BookStoreDataFetchers;
+import org.people.weijuly.bookstore.graphql.BookStoreMutationDataFetchers;
 import org.people.weijuly.bookstore.model.AddBookMutationResolver;
-import org.people.weijuly.bookstore.model.AddBookResultModel;
 import org.people.weijuly.bookstore.model.AuthorInModel;
 import org.people.weijuly.bookstore.model.BookInModel;
+import org.people.weijuly.bookstore.model.BookResultModel;
 import org.people.weijuly.bookstore.model.TagModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ import static org.people.weijuly.bookstore.util.LoggerUtil.format;
 @Component
 public class AddBookMutationResolverImpl implements AddBookMutationResolver {
 
-    private static final Logger logger = LoggerFactory.getLogger(BookStoreDataFetchers.class);
+    private static final Logger logger = LoggerFactory.getLogger(BookStoreMutationDataFetchers.class);
 
     @Autowired
     private BookRepository bookRepository;
@@ -42,7 +42,7 @@ public class AddBookMutationResolverImpl implements AddBookMutationResolver {
     private BookTagRepository bookTagRepository;
 
     @Override
-    public AddBookResultModel addBook(BookInModel bookIn) throws Exception {
+    public BookResultModel addBook(BookInModel bookIn) throws Exception {
         try {
             AuthorEntity authorEntity = fetchOrSave(bookIn.getAuthor());
             BookEntity bookEntity = fetchOrSave(bookIn, authorEntity);
