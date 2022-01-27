@@ -1,0 +1,7 @@
+spring:
+  main:
+    web-application-type: NONE
+
+graphql:
+  client:
+    url: http://localhost:8080/graphql

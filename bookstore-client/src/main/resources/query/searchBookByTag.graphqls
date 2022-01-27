@@ -1,0 +1,9 @@
+query {
+    searchBooksByTag(tag: FICTION) {
+        ... on Books {
+            books {
+                id
+            }
+        }
+    }
+}

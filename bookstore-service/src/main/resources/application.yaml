@@ -5,6 +5,8 @@ server:
     key-store: "classpath:bookstore.p12"
     key-store-password: bookstore
     key-alias: bookstore
+  http:
+    port: 8080
 
 security:
   require-ssl: true
