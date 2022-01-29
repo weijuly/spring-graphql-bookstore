@@ -26,6 +26,7 @@ import static org.people.weijuly.bookstore.util.BookStoreConstants.CustomerResul
 import static org.people.weijuly.bookstore.util.BookStoreConstants.CustomersResultType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.MutationType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.QueryType;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.SubscriptionType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addBookMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addCustomerMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.lendBooksMutation;
@@ -45,6 +46,8 @@ import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustome
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookLikedQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookPurchasedQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByNameQuery;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.booksSubscription;
+import static org.springframework.http.MediaType.APPLICATION_NDJSON;
 import static org.springframework.util.StreamUtils.copyToString;
 
 @Component
@@ -64,6 +67,9 @@ public class GraphQLProvider {
 
     @Autowired
     private BookStoreMutationDataFetchers mutationDataFetchers;
+
+    @Autowired
+    private BooksStoreSubscriptionDataFetchers booksStoreSubscriptionDataFetchers;
 
     @Autowired
     private BookStoreTypeResolvers typeResolvers;
@@ -89,7 +95,7 @@ public class GraphQLProvider {
 
     private RuntimeWiring wiring() {
         return newRuntimeWiring()
-                .type(QueryType, typeWiring -> typeWiring
+                .type(QueryType, wiring -> wiring
                         .dataFetcher(searchAuthorByIdQuery, queryDataFetchers.searchAuthorById())
                         .dataFetcher(searchAuthorsByNameQuery, queryDataFetchers.searchAuthorsByName())
                         .dataFetcher(searchBookByIdQuery, queryDataFetchers.searchBookById())
@@ -103,24 +109,26 @@ public class GraphQLProvider {
                         .dataFetcher(searchCustomersByBookLikedQuery, queryDataFetchers.searchCustomersByBookLiked())
                         .dataFetcher(searchCustomersByBookPurchasedQuery, queryDataFetchers.searchCustomersByBookPurchased())
                         .dataFetcher(searchCustomersByNameQuery, queryDataFetchers.searchCustomersByName()))
-                .type(MutationType, typeWiring -> typeWiring
+                .type(MutationType, wiring -> wiring
                         .dataFetcher(addCustomerMutation, mutationDataFetchers.addCustomer())
                         .dataFetcher(purchaseBooksMutation, mutationDataFetchers.purchaseBooks())
                         .dataFetcher(lendBooksMutation, mutationDataFetchers.lendBooks())
                         .dataFetcher(returnBooksMutation, mutationDataFetchers.returnBooks())
                         .dataFetcher(likeBookMutation, mutationDataFetchers.likeBook())
                         .dataFetcher(addBookMutation, mutationDataFetchers.addBook()))
-                .type(AuthorResultType, typeWiring -> typeWiring
+                .type(SubscriptionType, wiring -> wiring
+                        .dataFetcher(booksSubscription, booksStoreSubscriptionDataFetchers.books()))
+                .type(AuthorResultType, wiring -> wiring
                         .typeResolver(typeResolvers.authorResultTypeResolver()))
-                .type(AuthorsResultType, typeWiring -> typeWiring
+                .type(AuthorsResultType, wiring -> wiring
                         .typeResolver(typeResolvers.authorsResultTypeResolver()))
-                .type(BookResultType, typeWiring -> typeWiring
+                .type(BookResultType, wiring -> wiring
                         .typeResolver(typeResolvers.bookResultTypeResolver()))
-                .type(BooksResultType, typeWiring -> typeWiring
+                .type(BooksResultType, wiring -> wiring
                         .typeResolver(typeResolvers.booksResultTypeResolver()))
-                .type(CustomerResultType, typeWiring -> typeWiring
+                .type(CustomerResultType, wiring -> wiring
                         .typeResolver(typeResolvers.customerResultTypeResolver()))
-                .type(CustomersResultType, typeWiring -> typeWiring
+                .type(CustomersResultType, wiring -> wiring
                         .typeResolver(typeResolvers.customersResultTypeResolver()))
                 .build();
     }

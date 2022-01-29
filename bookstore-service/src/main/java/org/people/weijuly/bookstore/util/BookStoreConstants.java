@@ -5,6 +5,7 @@ public interface BookStoreConstants {
     // graphql types
     String QueryType = "Query";
     String MutationType = "Mutation";
+    String SubscriptionType = "Subscription";
 
     // application types
     String AuthorResultType = "AuthorResult";
@@ -42,6 +43,9 @@ public interface BookStoreConstants {
     String lendBooksMutation = "lendBooks";
     String returnBooksMutation = "returnBooks";
     String likeBookMutation = "likeBook";
+
+    // subscriptions
+    String booksSubscription = "books";
 
     // arguments
     String customerArg = "customer";

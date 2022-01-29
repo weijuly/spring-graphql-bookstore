@@ -1,6 +1,7 @@
 schema {
     query: Query
     mutation: Mutation
+    subscription: Subscription
 }
 
 type Query {
@@ -42,6 +43,10 @@ type Mutation {
     returnBooks(cart: CartIn!): CustomerResult!
 
     likeBook(like: LikeIn!): CustomerResult!
+}
+
+type Subscription {
+    books: Book!
 }
 
 """

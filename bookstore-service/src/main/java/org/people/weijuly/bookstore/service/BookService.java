@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -97,6 +99,12 @@ public class BookService {
 
     public boolean exists(String bookId) {
         return bookRepository.existsById(bookId);
+    }
+
+    public Stream<BookModel> allBooks() {
+        return StreamSupport
+                .stream(bookRepository.findAll().spliterator(), false)
+                .map(this::convert);
     }
 
     private BookModel convert(BookEntity bookEntity) {

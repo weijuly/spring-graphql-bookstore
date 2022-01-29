@@ -1,26 +1,36 @@
 package org.people.weijuly.bookstore;
 
-import org.apache.catalina.connector.Connector;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.web.embedded.netty.NettyReactiveWebServerFactory;
+import org.springframework.boot.web.reactive.server.ReactiveWebServerFactory;
+import org.springframework.boot.web.server.WebServer;
+import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 @Component
 public class BookStoreHttpServer {
 
+    @Autowired
+    HttpHandler handler;
+
     @Value("${server.http.port}")
     private Integer port;
 
-    @Bean
-    public ServletWebServerFactory servletContainer() {
-        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-        connector.setPort(port);
+    WebServer webServer;
 
-        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        factory.addAdditionalTomcatConnectors(connector);
+    @PostConstruct
+    public void start() {
+        ReactiveWebServerFactory factory = new NettyReactiveWebServerFactory(port);
+        webServer = factory.getWebServer(handler);
+        webServer.start();
+    }
 
-        return factory;
+    @PreDestroy
+    public void stop() {
+        webServer.stop();
     }
 }
