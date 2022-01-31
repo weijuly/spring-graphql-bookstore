@@ -144,6 +144,8 @@
                             <outputDir>${project.build.directory}/generated-sources/graphql</outputDir>
                             <packageName>org.people.weijuly.bookstore.model</packageName>
                             <modelNameSuffix>Model</modelNameSuffix>
+                            <addGeneratedAnnotation>false</addGeneratedAnnotation>
+                            <subscriptionReturnType>org.reactivestreams.Publisher</subscriptionReturnType>
                         </configuration>
                     </execution>
                 </executions>
