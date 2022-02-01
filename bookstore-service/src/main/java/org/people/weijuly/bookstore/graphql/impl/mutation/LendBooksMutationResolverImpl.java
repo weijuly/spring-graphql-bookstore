@@ -15,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 @Component
 public class LendBooksMutationResolverImpl implements LendBooksMutationResolver {
 
@@ -72,13 +77,26 @@ public class LendBooksMutationResolverImpl implements LendBooksMutationResolver 
                         String.format("Customer with id: %s cannot be found", cartIn.getCustomerId()),
                         HttpStatus.BAD_REQUEST
                 ));
+        if (cartIn.getBooks().size() != new HashSet<>(cartIn.getBooks()).size()) {
+            throw new BookStoreException(
+                    "Trying to lend duplicate book ids",
+                    HttpStatus.BAD_REQUEST);
+        }
+
         for (String bookId : cartIn.getBooks()) {
             BookEntity bookEntity = bookRepository
                     .findById(bookId)
                     .orElseThrow(() -> new BookStoreException(
-                            String.format("Book with id: %s cannot be found", cartIn.getCustomerId()),
+                            String.format("Book with id: %s cannot be found", bookId),
                             HttpStatus.BAD_REQUEST
                     ));
+            Optional<LendingEntity> lendingEntity = lendingRepository
+                    .findByCustomerIdAndBookIdAndStatus(cartIn.getCustomerId(), bookId, LendingStatus.ACTIVE);
+            if (lendingEntity.isPresent()) {
+                throw new BookStoreException(
+                        String.format("Book with id: %s is already lent to the Customer with id %s", bookId, cartIn.getCustomerId()),
+                        HttpStatus.BAD_REQUEST);
+            }
             if (bookEntity.getCopies() == 0) {
                 throw new BookStoreException(
                         String.format("Book with id: %s is currently unavailable", cartIn.getCustomerId()),
@@ -96,3 +114,4 @@ public class LendBooksMutationResolverImpl implements LendBooksMutationResolver 
         return lendingEntity;
     }
 }
+
