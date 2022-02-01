@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
 @Component
 public class LikeBookMutationResolverImpl implements LikeBookMutationResolver {
 
@@ -41,21 +43,21 @@ public class LikeBookMutationResolverImpl implements LikeBookMutationResolver {
         if (!bookService.exists(bookId)) {
             throw new BookStoreException(
                     String.format("Book with id: %s cannot be found", bookId),
-                    HttpStatus.BAD_REQUEST
+                    BAD_REQUEST
             );
         }
 
         if (!customerService.exists(customerId)) {
             throw new BookStoreException(
                     String.format("Customer with id: %s cannot be found", customerId),
-                    HttpStatus.BAD_REQUEST
+                    BAD_REQUEST
             );
         }
 
         if (!customerService.didPurchaseOrLend(customerId, bookId)) {
             throw new BookStoreException(
                     String.format("Customer id: %s did not purchase or lend book id: %s", customerId, bookId),
-                    HttpStatus.BAD_REQUEST
+                    BAD_REQUEST
             );
         }
     }

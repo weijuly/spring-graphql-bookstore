@@ -3,6 +3,7 @@ package org.people.weijuly.bookstore.service;
 import org.people.weijuly.bookstore.data.BookEntity;
 import org.people.weijuly.bookstore.data.BookRepository;
 import org.people.weijuly.bookstore.model.AuthorModel;
+import org.people.weijuly.bookstore.model.BookInModel;
 import org.people.weijuly.bookstore.model.BookModel;
 import org.people.weijuly.bookstore.model.BooksModel;
 import org.people.weijuly.bookstore.model.BooksResultModel;
@@ -10,7 +11,6 @@ import org.people.weijuly.bookstore.model.TagModel;
 import org.people.weijuly.bookstore.util.BookStoreException;
 import org.people.weijuly.bookstore.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -120,5 +120,33 @@ public class BookService {
         bookModel.setStats(bookStatsService.build(bookEntity.getId()));
         bookModel.setAuthor(authorService.build(bookEntity.getAuthorId()));
         return bookModel;
+    }
+
+    public BookModel save(BookInModel bookIn) {
+        AuthorModel authorModel = authorService.save(bookIn.getAuthor());
+        String bookId = bookRepository
+                .findByName(bookIn.getName())
+                .map(bookEntity -> updateCopies(bookEntity, bookIn.getCopies()))
+                .orElseGet(() -> bookRepository.save(convert(bookIn, authorModel.getId())))
+                .getId();
+        tagsService.save(bookId, bookIn.getTags());
+        return build(bookId);
+    }
+
+    private BookEntity convert(BookInModel bookIn, String authorId) {
+        BookEntity bookEntity = new BookEntity();
+        bookEntity.setIsbn(bookIn.getIsbn());
+        bookEntity.setName(bookIn.getName());
+        bookEntity.setYear(bookIn.getYear());
+        bookEntity.setPages(bookIn.getPages());
+        bookEntity.setPrice(bookIn.getPrice());
+        bookEntity.setCopies(bookIn.getCopies());
+        bookEntity.setAuthorId(authorId);
+        return bookEntity;
+    }
+
+    private BookEntity updateCopies(BookEntity bookEntity, Integer copies) {
+        bookEntity.setCopies(bookEntity.getCopies() + copies);
+        return bookRepository.save(bookEntity);
     }
 }
