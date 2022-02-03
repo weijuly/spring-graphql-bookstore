@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.people.weijuly.bookstore.data.AuthorEntity;
 import org.people.weijuly.bookstore.data.AuthorRepository;
-import org.people.weijuly.bookstore.data.UUIDGenerator;
 import org.people.weijuly.bookstore.model.AuthorInModel;
 import org.people.weijuly.bookstore.model.AuthorModel;
 
@@ -18,7 +17,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,6 +46,19 @@ class AuthorServiceTest {
         assertNotNull(authorModel.getId());
         verify(authorRepository, times(1)).findByFirstNameAndLastName(FIRST_NAME, LAST_NAME);
         verify(authorRepository, times(1)).save(any(AuthorEntity.class));
+    }
+
+    @Test
+    @DisplayName("save should return entry from AUTHOR table when entry exists")
+    public void saveShouldReturnEntryWhenExists() {
+        when(authorRepository.findByFirstNameAndLastName(FIRST_NAME, LAST_NAME))
+                .thenReturn(Optional.of(authorEntity()));
+        AuthorModel authorModel = authorService.save(authorIn());
+        assertNotNull(authorModel);
+        assertEquals(authorModel.getFirstName(), FIRST_NAME);
+        assertEquals(authorModel.getLastName(), LAST_NAME);
+        assertNotNull(authorModel.getId());
+        verify(authorRepository, times(1)).findByFirstNameAndLastName(FIRST_NAME, LAST_NAME);
     }
 
     private AuthorInModel authorIn() {
