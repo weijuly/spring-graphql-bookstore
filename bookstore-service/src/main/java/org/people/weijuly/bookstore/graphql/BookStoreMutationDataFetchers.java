@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import graphql.schema.DataFetcher;
 import org.people.weijuly.bookstore.model.AddBookMutationResolver;
 import org.people.weijuly.bookstore.model.AddCustomerMutationResolver;
-import org.people.weijuly.bookstore.model.AuthorModel;
 import org.people.weijuly.bookstore.model.BookInModel;
-import org.people.weijuly.bookstore.model.BookModel;
 import org.people.weijuly.bookstore.model.BookResultModel;
 import org.people.weijuly.bookstore.model.CartInModel;
 import org.people.weijuly.bookstore.model.CustomerInModel;
@@ -20,8 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 import static org.people.weijuly.bookstore.util.BookStoreConstants.bookArg;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.cartArg;

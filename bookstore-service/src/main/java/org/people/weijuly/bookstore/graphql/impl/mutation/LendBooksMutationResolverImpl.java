@@ -16,9 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Component
 public class LendBooksMutationResolverImpl implements LendBooksMutationResolver {
@@ -114,4 +112,3 @@ public class LendBooksMutationResolverImpl implements LendBooksMutationResolver 
         return lendingEntity;
     }
 }
-

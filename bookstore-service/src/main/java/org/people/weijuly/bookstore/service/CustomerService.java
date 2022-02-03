@@ -8,7 +8,6 @@ import org.people.weijuly.bookstore.model.CustomersModel;
 import org.people.weijuly.bookstore.model.CustomersResultModel;
 import org.people.weijuly.bookstore.util.BookStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;

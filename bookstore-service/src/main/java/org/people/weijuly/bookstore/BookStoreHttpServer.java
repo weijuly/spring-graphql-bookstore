@@ -16,11 +16,9 @@ public class BookStoreHttpServer {
 
     @Autowired
     HttpHandler handler;
-
+    WebServer webServer;
     @Value("${server.http.port}")
     private Integer port;
-
-    WebServer webServer;
 
     @PostConstruct
     public void start() {

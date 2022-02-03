@@ -29,6 +29,7 @@ import static org.people.weijuly.bookstore.util.BookStoreConstants.QueryType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.SubscriptionType;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addBookMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.addCustomerMutation;
+import static org.people.weijuly.bookstore.util.BookStoreConstants.booksSubscription;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.lendBooksMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.likeBookMutation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.purchaseBooksMutation;
@@ -46,8 +47,6 @@ import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustome
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookLikedQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByBookPurchasedQuery;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.searchCustomersByNameQuery;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.booksSubscription;
-import static org.springframework.http.MediaType.APPLICATION_NDJSON;
 import static org.springframework.util.StreamUtils.copyToString;
 
 @Component

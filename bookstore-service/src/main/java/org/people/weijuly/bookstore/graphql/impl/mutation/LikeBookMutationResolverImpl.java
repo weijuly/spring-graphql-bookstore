@@ -8,7 +8,6 @@ import org.people.weijuly.bookstore.service.CustomerService;
 import org.people.weijuly.bookstore.service.LikeService;
 import org.people.weijuly.bookstore.util.BookStoreException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
