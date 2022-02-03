@@ -10,11 +10,16 @@ import org.people.weijuly.bookstore.data.AuthorEntity;
 import org.people.weijuly.bookstore.data.AuthorRepository;
 import org.people.weijuly.bookstore.model.AuthorInModel;
 import org.people.weijuly.bookstore.model.AuthorModel;
+import org.people.weijuly.bookstore.model.AuthorsModel;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -59,6 +64,29 @@ class AuthorServiceTest {
         assertEquals(authorModel.getLastName(), LAST_NAME);
         assertNotNull(authorModel.getId());
         verify(authorRepository, times(1)).findByFirstNameAndLastName(FIRST_NAME, LAST_NAME);
+    }
+
+    @Test
+    @DisplayName("findByNameContains should return list of authors from AUTHOR table")
+    public void findByNameContainsShouldReturnListOfAuthors() {
+        when(authorRepository.findByFirstNameContainingOrLastNameContaining(FIRST_NAME, FIRST_NAME))
+                .thenReturn(Collections.singletonList(authorEntity()));
+        AuthorsModel authorsModel = authorService.findByNameContains(FIRST_NAME);
+        assertAll(() -> {
+            assertNotNull(authorsModel);
+            assertNotNull(authorsModel.getAuthors());
+            List<AuthorModel> authorModels = authorsModel.getAuthors();
+            assertAll(() -> {
+                assertFalse(authorModels.isEmpty());
+                assertEquals(authorModels.size(), 1);
+                AuthorModel authorModel = authorModels.get(0);
+                assertAll(() -> {
+                    assertEquals(authorModel.getLastName(), LAST_NAME);
+                    assertEquals(authorModel.getFirstName(), FIRST_NAME);
+                    assertNotNull(authorModel.getId());
+                });
+            });
+        });
     }
 
     private AuthorInModel authorIn() {
