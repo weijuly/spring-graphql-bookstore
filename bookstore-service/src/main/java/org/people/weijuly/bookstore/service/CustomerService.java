@@ -2,6 +2,7 @@ package org.people.weijuly.bookstore.service;
 
 import org.people.weijuly.bookstore.data.CustomerEntity;
 import org.people.weijuly.bookstore.data.CustomerRepository;
+import org.people.weijuly.bookstore.model.CustomerInModel;
 import org.people.weijuly.bookstore.model.CustomerModel;
 import org.people.weijuly.bookstore.model.CustomersModel;
 import org.people.weijuly.bookstore.model.CustomersResultModel;
@@ -42,6 +43,13 @@ public class CustomerService {
                 ));
     }
 
+    public CustomerModel save(CustomerInModel customerIn) {
+        CustomerEntity customerEntity = customerRepository
+                .findByFirstNameAndLastName(customerIn.getFirstName(), customerIn.getLastName())
+                .orElseGet(() -> customerRepository.save(convert(customerIn)));
+        return convert(customerEntity);
+    }
+
     public boolean didPurchaseOrLend(String customerId, String bookId) {
         return purchaseService.didPurchase(customerId, bookId) || lendingService.didLend(customerId, bookId);
     }
@@ -63,6 +71,13 @@ public class CustomerService {
                 .map(bookService::build)
                 .collect(Collectors.toList()));
         return customerModel;
+    }
+
+    private CustomerEntity convert(CustomerInModel customerIn) {
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setFirstName(customerIn.getFirstName());
+        customerEntity.setLastName(customerIn.getLastName());
+        return customerEntity;
     }
 
     public CustomersModel searchCustomersByBookLend(String bookId) {
