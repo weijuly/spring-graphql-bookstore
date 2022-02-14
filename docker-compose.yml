@@ -3,22 +3,19 @@ version: "3"
 services:
   bookstore-database:
     image: bookstore-database:0.0.1-20220214121722
-    ports:
-      - "3306:3306"
     networks:
       - bookstore-network
   bookstore-service:
     image: bookstore-service:0.0.1-202202140652629
-    ports:
-      - "8080:8080"
     networks:
       - bookstore-network
     depends_on:
       - bookstore-database
   bookstore-gateway:
-    image: bookstore-gateway:0.0.1-20220214122505
+    image: bookstore-gateway:0.0.1-20220214162947
     ports:
       - "443:443"
+      - "8080:80"
     networks:
       - bookstore-network
     depends_on:
