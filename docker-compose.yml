@@ -1,20 +1,28 @@
 version: "3"
 
 services:
-  database:
-    image: bookstore-database:0.0.1-20220115215147
+  bookstore-database:
+    image: bookstore-database:0.0.1-20220214121722
     ports:
       - "3306:3306"
     networks:
       - bookstore-network
-  service:
-    image: bookstore-service:0.0.1-202201151722360
+  bookstore-service:
+    image: bookstore-service:0.0.1-202202140652629
     ports:
-      - "8443:8443"
+      - "8080:8080"
     networks:
       - bookstore-network
     depends_on:
-      - database
+      - bookstore-database
+  bookstore-gateway:
+    image: bookstore-gateway:0.0.1-20220214122505
+    ports:
+      - "443:443"
+    networks:
+      - bookstore-network
+    depends_on:
+      - bookstore-service
 networks:
   bookstore-network:
     driver: bridge

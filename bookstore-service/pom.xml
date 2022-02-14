@@ -264,7 +264,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <database.url>jdbc:mysql://database:3306/bookstore</database.url>
+                <database.url>jdbc:mysql://bookstore-database:3306/bookstore</database.url>
             </properties>
             <build>
                 <plugins>
