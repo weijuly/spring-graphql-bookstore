@@ -39,7 +39,7 @@
     <properties>
         <java.version>1.8</java.version>
         <graphql.version>11.1.0</graphql.version>
-        <maven.build.timestamp.format>yyyyMMddHHmmSS</maven.build.timestamp.format>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <database.url>jdbc:mysql://localhost:3306/bookstore</database.url>
     </properties>
 
