@@ -1,0 +1,3 @@
+
+>>> Query: searchAuthorById >>>
+Enter the id of the author for search:

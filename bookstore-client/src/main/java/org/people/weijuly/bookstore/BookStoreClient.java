@@ -1,6 +1,7 @@
 package org.people.weijuly.bookstore;
 
 import org.people.weijuly.bookstore.client.SampleClient;
+import org.people.weijuly.bookstore.impl.ReadEvaluatePrintLoop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,9 @@ public class BookStoreClient implements CommandLineRunner {
     @Autowired
     SampleClient client;
 
+    @Autowired
+    ReadEvaluatePrintLoop loop;
+
     public static void main(String[] args) {
         SpringApplication.run(BookStoreClient.class, args);
     }
@@ -20,7 +24,9 @@ public class BookStoreClient implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println(">>> running >>>");
-        client.call();
+        loop.loop();
+        //client.call();
+
     }
 
 

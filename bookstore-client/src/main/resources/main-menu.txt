@@ -1,0 +1,25 @@
+
+=================================================
+Book Store Operation Menu - Choose an operation
+=================================================
+Queries:
+[a] searchAuthorById
+[b] searchAuthorsByName
+[c] searchBookById
+[d] searchBooksByName
+[e] searchBooksByTag
+[f] searchBooksByYear
+[g] searchBooksByAuthorId
+[h] searchBooksByAuthorName
+[i] searchCustomerById
+[j] searchCustomersByName
+[k] searchCustomersByBookPurchased
+[l] searchCustomersByBookLend
+[m] searchCustomersByBookLiked
+
+Mutations:
+[n]
+
+Exit: [z]
+
+Enter your selection:
