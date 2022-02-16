@@ -11,9 +11,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class ResourceUtil {
+public class ResourceReader {
 
-    public String getResourceAsString(String filename) throws IOException {
+    public String read(String filename) throws IOException {
         return Optional
                 .ofNullable(filename)
                 .map(name -> ClassLoader.getSystemClassLoader().getResourceAsStream(name))

@@ -1,32 +1,26 @@
-package org.people.weijuly.bookstore.client;
+package org.people.weijuly.bookstore.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import graphql.kickstart.spring.webclient.boot.GraphQLRequest;
-import graphql.kickstart.spring.webclient.boot.GraphQLResponse;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import lombok.SneakyThrows;
-import org.people.weijuly.bookstore.model.BookModel;
-import org.people.weijuly.bookstore.model.BooksModel;
-import org.people.weijuly.bookstore.util.ResourceUtil;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
-import java.io.IOException;
+import java.util.Properties;
+import java.util.Scanner;
 
-@Component
-public class SampleClient {
-
-    @Autowired
-    private ResourceUtil resourceUtil;
+@Configuration
+public class BookStoreComponentProvider {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -34,23 +28,21 @@ public class SampleClient {
     @Value("${graphql.server.url}")
     private String url;
 
-    public void call() {
-        try {
-            String query = resourceUtil.getResourceAsString("query/searchBookByTag.graphqls");
-            GraphQLRequest request = GraphQLRequest.builder().query(query).build();
-            GraphQLResponse response = graphQLWebClient().post(request).block();
-            BooksModel booksModel = response.get("searchBooksByTag", BooksModel.class);
-            for (BookModel bookModel : booksModel.getBooks()) {
-                System.out.println(bookModel.getId());
-            }
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+    @Bean
+    public Scanner scanner() {
+        return new Scanner(System.in);
     }
 
     @Bean
     public GraphQLWebClient graphQLWebClient() throws SSLException {
         return GraphQLWebClient.newInstance(webClient(), objectMapper);
+    }
+
+    @Bean
+    public VelocityEngine velocityEngine() {
+        VelocityEngine engine = new VelocityEngine();
+        engine.init(properties());
+        return engine;
     }
 
     private WebClient webClient() {
@@ -74,4 +66,13 @@ public class SampleClient {
                 .trustManager(InsecureTrustManagerFactory.INSTANCE)
                 .build();
     }
+
+    private Properties properties() {
+        Properties properties = new Properties();
+        properties.put("resource.loader", "classpath");
+        properties.put("classpath.resource.loader.class",
+                "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+        return properties;
+    }
+
 }

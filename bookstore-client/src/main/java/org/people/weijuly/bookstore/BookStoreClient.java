@@ -1,6 +1,5 @@
 package org.people.weijuly.bookstore;
 
-import org.people.weijuly.bookstore.client.SampleClient;
 import org.people.weijuly.bookstore.impl.ReadEvaluatePrintLoop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,8 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BookStoreClient implements CommandLineRunner {
 
-    @Autowired
-    SampleClient client;
 
     @Autowired
     ReadEvaluatePrintLoop loop;
