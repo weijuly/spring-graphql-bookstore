@@ -10,7 +10,7 @@ services:
     networks:
       - bookstore-network
   bookstore-service:
-    image: bookstore-service:0.0.1-20220223094409
+    image: bookstore-service:0.0.1-20220223174626
     networks:
       - bookstore-network
     depends_on:

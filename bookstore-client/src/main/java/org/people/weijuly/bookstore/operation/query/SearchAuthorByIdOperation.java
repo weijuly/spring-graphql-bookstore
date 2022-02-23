@@ -1,7 +1,9 @@
 package org.people.weijuly.bookstore.operation.query;
 
 import org.people.weijuly.bookstore.client.BookStoreGraphQLClient;
+import org.people.weijuly.bookstore.model.AuthorResultModel;
 import org.people.weijuly.bookstore.operation.BookStoreOperation;
+import org.people.weijuly.bookstore.operation.OperationExecutionContext;
 import org.people.weijuly.bookstore.util.QueryRenderer;
 import org.people.weijuly.bookstore.util.ResourceReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,10 @@ import java.util.Scanner;
 
 @Component
 public class SearchAuthorByIdOperation implements BookStoreOperation {
+
+    private final String PROMPT_FILE = "display/searchAuthorById.prompt.txt";
+    private final String QUERY_TEMPLATE_FILE = "graphql/searchAuthorById.template.graphqls";
+    private final String RESPONSE_FIELD = "searchAuthorById";
 
     private String prompt;
 
@@ -32,18 +38,17 @@ public class SearchAuthorByIdOperation implements BookStoreOperation {
     @PostConstruct
     @Override
     public void init() throws Exception {
-        prompt = reader.read("display/searchAuthorById.prompt.txt");
+        prompt = reader.read(PROMPT_FILE);
     }
 
     @Override
     public void execute() throws Exception {
-        System.out.println(prompt);
+        System.out.print(prompt);
         String authorId = scanner.nextLine();
         Map<String, Object> variables = new HashMap<>();
         variables.put("authorId", authorId);
-        String query = renderer.render("graphql/searchAuthorById.template.graphqls", variables);
-        System.out.println(query);
-        String result = graphQLClient.execute(query);
-        System.out.println(result);
+        String query = renderer.render(QUERY_TEMPLATE_FILE, variables);
+        graphQLClient.execute(new OperationExecutionContext(query, RESPONSE_FIELD, AuthorResultModel.class));
+        scanner.nextLine();
     }
 }

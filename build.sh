@@ -4,6 +4,8 @@ WORKDIR=`pwd`
 echo ${WORKDIR}
 cd ${WORKDIR}/bookstore-database
 /bin/bash build.sh
+cd ${WORKDIR}/bookstore-cache
+/bin/bash build.sh
 cd ${WORKDIR}/bookstore-gateway
 /bin/bash build.sh
 cd ${WORKDIR}/bookstore-service

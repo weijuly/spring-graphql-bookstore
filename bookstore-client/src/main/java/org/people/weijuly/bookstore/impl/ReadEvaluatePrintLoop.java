@@ -34,7 +34,6 @@ public class ReadEvaluatePrintLoop {
     @PostConstruct
     public void init() throws Exception {
         commands.put(searchAuthorByIdOperation, searchAuthorById);
-
         menu = reader.read("display/mainMenu.txt");
     }
 

@@ -13,19 +13,21 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n    searchAuthorById(authorId: \"c4ce559c-7d97-11ec-ab46-0242ac110002\") {\n        ... on Author {\n            id\n            firstName\n            lastName\n        }\n        ... on BookStoreError {\n            status\n            message\n        }\n    }\n}",
+						"query": "query {\n    searchAuthorById(authorId: \"d43694cf-8e54-11ec-a8fb-0242ac15002\") {\n        ... on Author {\n            __typename\n            id\n            firstName\n            lastName\n        }\n        ... on BookStoreError {\n            __typename\n            status\n            message\n        }\n    }\n}",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
+						"{{graphql-server-url}}"
 					],
-					"port": "8443",
-					"path": [
-						"graphql"
+					"query": [
+						{
+							"key": "tenant_name",
+							"value": "venmo",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -39,19 +41,14 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n    searchAuthorsByName(name: \"\") {\n        ... on Authors {\n            authors {\n                id\n                firstName\n                lastName\n            }\n        }\n        ... on BookStoreError {\n            status\n            message\n        }\n    }\n}",
+						"query": "query {\n    searchAuthorsByName(name: \"\") {\n        ... on Authors {\n            __typename\n            authors {\n                id\n                firstName\n                lastName\n            }\n        }\n        ... on BookStoreError {\n            __typename\n            status\n            message\n        }\n    }\n}",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8443",
-					"path": [
-						"graphql"
+						"{{graphql-server-url}}"
 					]
 				}
 			},
@@ -65,19 +62,14 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\n  searchBookById(bookId: \"d7ce2cc2-7da9-11ec-a301-\") {\n    ... on Book {\n      id\n      isbn\n      name\n      pages\n      price\n      year\n      author {\n        id\n        firstName\n        lastName\n      }\n      tags\n      updatedOn\n      stats {\n        copies\n        purchases\n        lends\n        likes\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"query": "{\n  searchBookById(bookId: \"d7ce2cc2-7da9-11ec-a301-\") {\n    ... on Book {\n      __typename\n      id\n      isbn\n      name\n      pages\n      price\n      year\n      author {\n        id\n        firstName\n        lastName\n      }\n      tags\n      updatedOn\n      stats {\n        copies\n        purchases\n        lends\n        likes\n      }\n    }\n    ... on BookStoreError {\n      __typename\n      status\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8443",
-					"path": [
-						"graphql"
+						"{{graphql-server-url}}"
 					]
 				}
 			},
@@ -91,19 +83,14 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\n  searchBooksByName(name: \"es\") {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"query": "{\n  searchBooksByName(name: \"es\") {\n    ... on Books {\n      __typename\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      __typename\n      status\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8443",
-					"path": [
-						"graphql"
+						"{{graphql-server-url}}"
 					]
 				}
 			},
@@ -117,19 +104,14 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\n  searchBooksByTag(tag: POLITICS) {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"query": "{\n  searchBooksByTag(tag: POLITICS) {\n    ... on Books {\n      __typename\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      __typename\n      status\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8443",
-					"path": [
-						"graphql"
+						"{{graphql-server-url}}"
 					]
 				}
 			},
@@ -143,19 +125,14 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\n  searchBooksByYear(year: 1843) {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"query": "{\n  searchBooksByYear(year: 1843) {\n    ... on Books {\n      __typename\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      __typename\n      status\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8443",
-					"path": [
-						"graphql"
+						"{{graphql-server-url}}"
 					]
 				}
 			},
@@ -169,19 +146,14 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\n  searchBooksByAuthorId(authorId: \"d7cdaa9a-7da9-11ec-a301-0242ac110002\") {\n    ... on Books {\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      status\n      message\n    }\n  }\n}\n",
+						"query": "{\n  searchBooksByAuthorId(authorId: \"d7cdaa9a-7da9-11ec-a301-0242ac110002\") {\n    ... on Books {\n      __typename\n      books {\n        id\n        isbn\n        name\n        pages\n        price\n        year\n        author {\n          id\n          firstName\n          lastName\n        }\n        tags\n        updatedOn\n        stats {\n          copies\n          purchases\n          lends\n          likes\n        }\n      }\n    }\n    ... on BookStoreError {\n      __typename\n      status\n      message\n    }\n  }\n}\n",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:8443/graphql",
-					"protocol": "https",
+					"raw": "{{graphql-server-url}}",
 					"host": [
-						"localhost"
-					],
-					"port": "8443",
-					"path": [
-						"graphql"
+						"{{graphql-server-url}}"
 					]
 				}
 			},
@@ -498,6 +470,59 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "books",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "subscription {\n    books\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "graphql-server-url",
+			"value": "http://localhost:8080/graphql",
+			"type": "string"
 		}
 	]
 }

@@ -1,11 +1,13 @@
 query {
     searchAuthorById(authorId: "${authorId}") {
         ... on Author {
+            __typename
             id
             firstName
             lastName
         }
         ... on BookStoreError {
+            __typename
             status
             message
         }

@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class BookStoreComponentProvider {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private ObjectMapper mapper;
 
     @Value("${graphql.server.url}")
     private String url;
@@ -35,7 +35,7 @@ public class BookStoreComponentProvider {
 
     @Bean
     public GraphQLWebClient graphQLWebClient() throws SSLException {
-        return GraphQLWebClient.newInstance(webClient(), objectMapper);
+        return GraphQLWebClient.newInstance(webClient(), mapper);
     }
 
     @Bean
