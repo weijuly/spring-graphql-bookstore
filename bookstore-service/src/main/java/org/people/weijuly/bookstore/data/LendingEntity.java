@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name = "LENDING")
-public class LendingEntity {
+public class LendingEntity implements Serializable {
 
     @Id
     @Column(name = "ID")

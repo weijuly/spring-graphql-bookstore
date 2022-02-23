@@ -22,3 +22,9 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  cache:
+    type: redis
+  redis:
+    host: @cache.url@
+    port: 6379
+    password: bookstore

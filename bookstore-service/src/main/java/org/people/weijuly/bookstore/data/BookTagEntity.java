@@ -8,11 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Data
 @Table(name = "BOOK_TAGS")
-public class BookTagEntity {
+public class BookTagEntity implements Serializable {
 
     @Id
     @Column(name = "ID")

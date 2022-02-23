@@ -10,12 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "BOOK")
-public class BookEntity {
+public class BookEntity implements Serializable {
 
     @Id
     @Column(name = "ID")

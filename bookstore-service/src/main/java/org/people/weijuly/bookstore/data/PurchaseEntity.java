@@ -9,12 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "PURCHASE")
-public class PurchaseEntity {
+public class PurchaseEntity implements Serializable {
 
     @Id
     @Column(name = "ID")

@@ -5,12 +5,17 @@ services:
     image: bookstore-database:0.0.1-20220215151046
     networks:
       - bookstore-network
+  bookstore-cache:
+    image: bookstore-cache:0.0.1-20220223151219
+    networks:
+      - bookstore-network
   bookstore-service:
-    image: bookstore-service:0.0.1-20220215095505
+    image: bookstore-service:0.0.1-20220223094409
     networks:
       - bookstore-network
     depends_on:
       - bookstore-database
+      - bookstore-cache
   bookstore-gateway:
     image: bookstore-gateway:0.0.1-20220215151137
     ports:
