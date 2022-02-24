@@ -308,7 +308,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <repository>${project.artifactId}</repository>
+                            <repository>ghcr.io/weijuly/${project.artifactId}</repository>
                             <tag>${project.version}-${maven.build.timestamp}</tag>
                             <buildArgs>
                                 <APP_JAR>${project.build.finalName}.jar</APP_JAR>

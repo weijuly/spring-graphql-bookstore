@@ -2,22 +2,22 @@ version: "3"
 
 services:
   bookstore-database:
-    image: bookstore-database:0.0.1-20220215151046
+    image: ghcr.io/weijuly/bookstore-database:0.0.1-20220215151046
     networks:
       - bookstore-network
   bookstore-cache:
-    image: bookstore-cache:0.0.1-20220223151219
+    image: ghcr.io/weijuly/bookstore-cache:0.0.1-20220224110232
     networks:
       - bookstore-network
   bookstore-service:
-    image: bookstore-service:0.0.1-20220223174626
+    image: ghcr.io/weijuly/bookstore-service:0.0.1-20220224053243
     networks:
       - bookstore-network
     depends_on:
       - bookstore-database
       - bookstore-cache
   bookstore-gateway:
-    image: bookstore-gateway:0.0.1-20220215151137
+    image: ghcr.io/weijuly/bookstore-gateway:0.0.1-20220215151137
     ports:
       - "443:443"
     networks:
