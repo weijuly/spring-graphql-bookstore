@@ -1,0 +1,18 @@
+query {
+    searchAuthorsByName(name: "${authorNamePart}") {
+        ... on Authors {
+            __typename
+            authors {
+                __typename
+                id
+                firstName
+                lastName
+            }
+        }
+        ... on BookStoreError {
+            __typename
+            status
+            message
+        }
+    }
+}
