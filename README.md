@@ -1,15 +1,6 @@
 # spring-graphql-bookstore
 
 A draft implementation of [GraphQL](https://graphql.org/) service on [spring-boot](https://spring.io/projects/spring-boot), using [graphql-spring-boot-starter](https://github.com/graphql-java-kickstart/graphql-spring-boot). This project consists of multiple applications:
-- [spring-graphql-bookstore](#spring-graphql-bookstore)
-- [Setting up development environment](#setting-up-development-environment)
-  - [Requirements](#requirements)
-  - [Quick Setup](#quick-setup)
-  - [Applications](#applications)
-    - [bookstore-database](#bookstore-database)
-    - [bookstore-gateway](#bookstore-gateway)
-    - [bookstore-service](#bookstore-service)
-    - [bookstore-client](#bookstore-client)
 
 # Setting up development environment
 ## Requirements
@@ -19,12 +10,21 @@ A draft implementation of [GraphQL](https://graphql.org/) service on [spring-boo
 * Any Java IDE, preferably [IntelliJ](https://www.jetbrains.com/idea/)
 * [Postman](https://www.postman.com/downloads/)
 
-## Quick Setup 
+## Quick Run
+Use `docker-compose up -d` to bring up the applications. The following endpoints are exposed:
+
+- `https://localhost/graphql` - GraphQL server 
+- `https://localhost/graphiql` - GraphiQL playground
+
+Refer to the Postman collection `graphql-bookstore.postman_collection.json` for samples
+
+
+## Build
 1. Use the build script at the root directory to build all the applications as docker images: `bash < build.sh`
 2. Note down the latest versions of the application images: `docker images`
 3. Change the version of each application as appropriate in `docker-compose.yml`
 4. Bring up the containers using `docker-compose up -d`
-5. Once the containers are up, you can access the GraphQL playground at [https://localhost/graphiql](https://localhost/graphiql) or import the `graphql-bookstore.postman_collection.json` collection into Postman to interact with the server
+5. Once the containers are up, you can access the servers as mentioned above
 
 > The server uses a self-signed certificate - you may want to disable SSL verification to interact with the server
 
