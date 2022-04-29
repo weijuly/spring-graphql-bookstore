@@ -1,7 +1,0 @@
-name: 'Create docker images'
-description: 'Create docker images'
-runs:
-    using: 'composite'
-    steps:
-        - run: build.sh
-          shell: bash

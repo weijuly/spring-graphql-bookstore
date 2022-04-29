@@ -1,0 +1,23 @@
+name: 'docker publish'
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  bookstore-gateway:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: 'bookstore-gateway'
+    steps:
+      - name: 'set timestamp'
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date '+%Y%m%d%H%M%S')"
+      - name: 'build and push'
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ghcr.io/weijuly/bookstore-gateway:${{steps.timestamp.outputs.timestamp}}
+
