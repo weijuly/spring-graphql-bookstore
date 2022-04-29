@@ -16,14 +16,21 @@ services:
     depends_on:
       - bookstore-database
       - bookstore-cache
+  bookstore-webapp:
+    image: ghcr.io/weijuly/bookstore-webapp:0.0.1-20220429124732
+    networks:
+      - bookstore-network
+    depends_on:
+      - bookstore-service
   bookstore-gateway:
-    image: ghcr.io/weijuly/bookstore-gateway:0.0.1-20220308151932
+    image: ghcr.io/weijuly/bookstore-gateway:0.0.1-20220429125353
     ports:
       - "443:443"
     networks:
       - bookstore-network
     depends_on:
-      - bookstore-service
+      - bookstore-webapp
+
 networks:
   bookstore-network:
     driver: bridge
