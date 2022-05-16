@@ -1,9 +1,10 @@
 import React from 'react'
+import Container from 'react-bootstrap/Container'
 
 const BookStoreApp = (props) => (
-    <div>
+    <Container>
         <h1>Welcome to BookStore Application</h1>
-    </div>
+    </Container>
 )
 
 export default BookStoreApp
