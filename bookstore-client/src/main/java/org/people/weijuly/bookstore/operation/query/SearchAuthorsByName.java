@@ -9,12 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-@Component
-public class SearchAuthorsByNameOperation implements BookStoreOperation {
-
-    private final String PROMPT_FILE = "display/searchAuthorsByName.prompt.txt";
-    private final String QUERY_TEMPLATE_FILE = "graphql/searchAuthorsByName.template.graphqls";
-    private final String RESPONSE_FIELD = "searchAuthorsByName";
+@Component("searchAuthorsByName")
+public class SearchAuthorsByName extends BookStoreOperation {
 
     @Autowired
     private Scanner scanner;
@@ -24,11 +20,11 @@ public class SearchAuthorsByNameOperation implements BookStoreOperation {
 
     @Override
     public void execute() throws Exception {
-        System.out.print(helper.getPrompt(PROMPT_FILE));
+        System.out.print(helper.getPrompt(name));
         String authorNamePart = scanner.nextLine();
         Map<String, Object> variables = new HashMap<>();
         variables.put("authorNamePart", authorNamePart);
-        helper.execute(QUERY_TEMPLATE_FILE, variables, RESPONSE_FIELD, AuthorsResultModel.class);
+        helper.execute(name, variables, AuthorsResultModel.class);
         scanner.nextLine();
     }
 }

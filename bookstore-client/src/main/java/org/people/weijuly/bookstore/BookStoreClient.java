@@ -22,8 +22,6 @@ public class BookStoreClient implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println(">>> running >>>");
         loop.loop();
-        //client.call();
-
     }
 
 

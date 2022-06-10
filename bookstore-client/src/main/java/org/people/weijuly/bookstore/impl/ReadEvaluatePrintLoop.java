@@ -2,10 +2,10 @@ package org.people.weijuly.bookstore.impl;
 
 import org.people.weijuly.bookstore.operation.BookStoreOperation;
 import org.people.weijuly.bookstore.operation.UnknownOperation;
-import org.people.weijuly.bookstore.operation.query.SearchAuthorByIdOperation;
-import org.people.weijuly.bookstore.operation.query.SearchAuthorsByNameOperation;
+import org.people.weijuly.bookstore.util.BookStoreOperationOption;
 import org.people.weijuly.bookstore.util.ResourceReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static org.people.weijuly.bookstore.util.BookStoreConstants.searchAuthorByIdOperation;
-import static org.people.weijuly.bookstore.util.BookStoreConstants.searchAuthorsByNameOperation;
 import static org.people.weijuly.bookstore.util.BookStoreConstants.unknownOperation;
 
 @Component
@@ -28,18 +26,16 @@ public class ReadEvaluatePrintLoop {
     private String menu;
 
     @Autowired
-    private SearchAuthorByIdOperation searchAuthorById;
-
-    @Autowired
-    private SearchAuthorsByNameOperation searchAuthorsByName;
+    private ApplicationContext context;
 
     @Autowired
     private UnknownOperation unknown;
 
     @PostConstruct
     public void init() throws Exception {
-        commands.put(searchAuthorByIdOperation, searchAuthorById);
-        commands.put(searchAuthorsByNameOperation, searchAuthorsByName);
+        for(BookStoreOperationOption option: BookStoreOperationOption.values()) {
+            commands.put(option.optionCode, context.getBean(option.name(), BookStoreOperation.class));
+        }
         menu = reader.read("display/mainMenu.txt");
     }
 

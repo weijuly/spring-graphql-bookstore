@@ -23,16 +23,24 @@ public class OperationHelper {
     @Autowired
     BookStoreGraphQLClient graphQLClient;
 
-    public String getPrompt(String promptFile) throws IOException {
-        return reader.read(promptFile);
+    public String getPrompt(String name) throws IOException {
+        return reader.read(promptFile(name));
     }
 
-    public void execute(String templateFile, Map<String, Object> variables, String responseField, Class<?> type)
+    public void execute(String name, Map<String, Object> variables, Class<?> type)
             throws Exception {
         graphQLClient.execute(new OperationExecutionContext(
-                renderer.render(templateFile, variables),
-                responseField,
+                renderer.render(templateFile(name), variables),
+                name,
                 type
         ));
+    }
+
+    private String promptFile(String name) {
+        return String.format("display/%s.prompt.txt", name);
+    }
+
+    private String templateFile(String name) {
+        return String.format("graphql/%s.template.graphqls", name);
     }
 }
