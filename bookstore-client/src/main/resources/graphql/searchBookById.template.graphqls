@@ -1,0 +1,33 @@
+{
+    searchBookById(bookId: "${bookId}") {
+        ... on Book {
+            __typename
+            id
+            isbn
+            name
+            pages
+            price
+            year
+            author {
+                __typename
+                id
+                firstName
+                lastName
+            }
+            tags
+            updatedOn
+            stats {
+                __typename
+                copies
+                purchases
+                lends
+                likes
+            }
+        }
+        ... on BookStoreError {
+            __typename
+            status
+            message
+        }
+    }
+}
